@@ -5,8 +5,7 @@ using System.Text;
 
 namespace SistemaSeguridad.BE
 {
-    public class Class1
+    class Class2
     {
-
     }
 }
