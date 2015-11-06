@@ -10,7 +10,7 @@ namespace SistemaSeguridad.BE
 
 
         //ofcorse
-        // como gostas
+        // como of course
 
     }
 }
