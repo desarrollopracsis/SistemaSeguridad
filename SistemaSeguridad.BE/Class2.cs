@@ -5,7 +5,12 @@ using System.Text;
 
 namespace SistemaSeguridad.BE
 {
-    class Class2
+    public class Class2
     {
+
+
+
+
+
     }
 }
