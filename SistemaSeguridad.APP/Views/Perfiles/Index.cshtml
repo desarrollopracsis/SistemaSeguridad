@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section scripts {
+    <script data-main="/app/main" src="~/app/vendor/require.js"></script>
+}
+<h2>Index</h2>
+
+<div class="well" id="content-evaluacion" data-ng-controller="perfilController" data-ng-init="init();">
+   <table class="table table-hover table-striped table-bordered" >
+        <thead class="bordered-blueberry">
+            <tr>
+                <th class="col-sm-4">CodAplicacion</th>
+                <th class="col-sm-3">CodPerfil</th>
+                <th class="col-sm-1">Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="t in Perfiles">
+                <td class="col-sm-3">
+                        {{t.CodAplicacion}}
+                </td>
+                 <td class="col-sm-3">
+                        {{t.CodPerfil}}
+                </td>
+                 <td class="col-sm-3">
+                        {{t.Nombre}}
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+
+<pre>{{Perfiles}}</pre>
+
+

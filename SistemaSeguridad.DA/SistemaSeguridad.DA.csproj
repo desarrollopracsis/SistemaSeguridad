@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{674E5960-329E-4DDA-8147-4B17633A5E8F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SistemaSeguridad.DA</RootNamespace>
+    <AssemblyName>SistemaSeguridad.DA</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BdSecurity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BdSecurity.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BdSecurity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BdSecurity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BdSecurity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BdSecurity.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorio\PerfilesDA.cs" />
+    <Compile Include="tbAplicaciones.cs">
+      <DependentUpon>BdSecurity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbAplicacionesProyecto.cs">
+      <DependentUpon>BdSecurity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbAplicacionesUsuario.cs">
+      <DependentUpon>BdSecurity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbAreas.cs">
+      <DependentUpon>BdSecurity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbEstados.cs">
+      <DependentUpon>BdSecurity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbPerfiles.cs">
+      <DependentUpon>BdSecurity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbPerfilesUsuario.cs">
+      <DependentUpon>BdSecurity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbUsuarios.cs">
+      <DependentUpon>BdSecurity.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SistemaSeguridad.BE\SistemaSeguridad.BE.csproj">
+      <Project>{5b765d87-afd2-48bd-95b1-05279ce14b08}</Project>
+      <Name>SistemaSeguridad.BE</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="BdSecurity.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BdSecurity.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="BdSecurity.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BdSecurity.edmx</DependentUpon>
+      <LastGenOutput>BdSecurity.Context.cs</LastGenOutput>
+    </None>
+    <None Include="BdSecurity.edmx.diagram">
+      <DependentUpon>BdSecurity.edmx</DependentUpon>
+    </None>
+    <None Include="BdSecurity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BdSecurity.edmx</DependentUpon>
+      <LastGenOutput>BdSecurity.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="df6cc36b68c548018854e169b11d8271" Name="Diagrama1">
+        <EntityTypeShape EntityType="bdSecurityModel.tbAplicaciones" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdSecurityModel.tbAplicacionesProyecto" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdSecurityModel.tbAplicacionesUsuario" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdSecurityModel.tbAreas" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdSecurityModel.tbEstados" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdSecurityModel.tbPerfiles" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdSecurityModel.tbPerfilesUsuario" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="bdSecurityModel.tbUsuarios" Width="1.5" PointX="3.75" PointY="11.5" IsExpanded="true" />
+        <AssociationConnector Association="bdSecurityModel.FK_tbAplicacionesProyecto_tbAplicaciones" ManuallyRouted="false" />
+        <AssociationConnector Association="bdSecurityModel.FK_tbAplicacionesUsuario_tbAplicaciones" ManuallyRouted="false" />
+        <AssociationConnector Association="bdSecurityModel.FK_tbPerfiles_tbAplicaciones" ManuallyRouted="false" />
+        <AssociationConnector Association="bdSecurityModel.FK_tbAplicacionesUsuario_tbUsuarios" ManuallyRouted="false" />
+        <AssociationConnector Association="bdSecurityModel.FK_tbAreas_tbAreas" ManuallyRouted="false" />
+        <AssociationConnector Association="bdSecurityModel.FK_tbPerfilesUsuario_tbPerfiles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
