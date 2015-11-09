@@ -4,47 +4,130 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="bdSecurityModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <EntityContainer Name="bdSecurityModelStoreContainer">
-          <EntitySet Name="tbAplicaciones" EntityType="bdSecurityModel.Store.tbAplicaciones" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbAplicacionesProyecto" EntityType="bdSecurityModel.Store.tbAplicacionesProyecto" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbAplicacionesUsuario" EntityType="bdSecurityModel.Store.tbAplicacionesUsuario" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbAreas" EntityType="bdSecurityModel.Store.tbAreas" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbEstados" EntityType="bdSecurityModel.Store.tbEstados" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbPerfiles" EntityType="bdSecurityModel.Store.tbPerfiles" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbPerfilesUsuario" EntityType="bdSecurityModel.Store.tbPerfilesUsuario" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tbUsuarios" EntityType="bdSecurityModel.Store.tbUsuarios" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_tbAplicacionesProyecto_tbAplicaciones" Association="bdSecurityModel.Store.FK_tbAplicacionesProyecto_tbAplicaciones">
-            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
-            <End Role="tbAplicacionesProyecto" EntitySet="tbAplicacionesProyecto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbAplicacionesUsuario_tbAplicaciones" Association="bdSecurityModel.Store.FK_tbAplicacionesUsuario_tbAplicaciones">
-            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
-            <End Role="tbAplicacionesUsuario" EntitySet="tbAplicacionesUsuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbAplicacionesUsuario_tbUsuarios" Association="bdSecurityModel.Store.FK_tbAplicacionesUsuario_tbUsuarios">
-            <End Role="tbUsuarios" EntitySet="tbUsuarios" />
-            <End Role="tbAplicacionesUsuario" EntitySet="tbAplicacionesUsuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbAreas_tbAreas" Association="bdSecurityModel.Store.FK_tbAreas_tbAreas">
-            <End Role="tbAreas" EntitySet="tbAreas" />
-            <End Role="tbAreas1" EntitySet="tbAreas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbPerfiles_tbAplicaciones" Association="bdSecurityModel.Store.FK_tbPerfiles_tbAplicaciones">
-            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
-            <End Role="tbPerfiles" EntitySet="tbPerfiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbPerfilesUsuario_tbPerfiles" Association="bdSecurityModel.Store.FK_tbPerfilesUsuario_tbPerfiles">
-            <End Role="tbPerfiles" EntitySet="tbPerfiles" />
-            <End Role="tbPerfilesUsuario" EntitySet="tbPerfilesUsuario" />
-          </AssociationSet>
-        </EntityContainer>
+      <Schema Namespace="BdSecurity.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'bdSecurity.dbo.data_temp' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="data_temp">
+          <Property Name="Identificacion" Type="varchar" MaxLength="100" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="100" />
+          <Property Name="Nombres" Type="varchar" MaxLength="100" />
+          <Property Name="Compania" Type="int" />
+          <Property Name="Perfil" Type="int" />
+          <Property Name="usuario" Type="varchar" MaxLength="50" />
+          <Property Name="codigo" Type="int" />
+        </EntityType>-->
+        <EntityType Name="dtproperties">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="property" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="objectid" Type="int" />
+          <Property Name="property" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="255" />
+          <Property Name="uvalue" Type="nvarchar" MaxLength="255" />
+          <Property Name="lvalue" Type="image" />
+          <Property Name="version" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="scConsultaMasiva">
+          <Key>
+            <PropertyRef Name="idconsulta" />
+          </Key>
+          <Property Name="idconsulta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idusuario" Type="int" Nullable="false" />
+          <Property Name="fechaInicia" Type="datetime" Nullable="false" />
+          <Property Name="fechaFin" Type="datetime" />
+          <Property Name="rutafile" Type="varchar" MaxLength="200" />
+          <Property Name="estado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="mensaje" Type="varchar" MaxLength="200" />
+          <Property Name="rutaOrigen" Type="varchar" MaxLength="200" />
+          <Property Name="idUsuarioEnvio" Type="int" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'bdSecurity.dbo.scConsultaMasiva_Detalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="scConsultaMasiva_Detalle">
+          <Key>
+            <PropertyRef Name="idcmDetalle" />
+          </Key>
+          <Property Name="idcmDetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idconsulta" Type="int" />
+          <Property Name="tipodoc" Type="char" MaxLength="1" />
+          <Property Name="numerodocumento" Type="varchar" MaxLength="20" />
+          <Property Name="apellido" Type="varchar" MaxLength="100" />
+          <Property Name="departamento" Type="varchar" MaxLength="100" />
+          <Property Name="idusuario" Type="int" />
+          <Property Name="producto" Type="varchar" MaxLength="100" />
+          <Property Name="numdecos" Type="int" />
+          <Property Name="provincia" Type="varchar" MaxLength="100" />
+          <Property Name="distrito" Type="varchar" MaxLength="100" />
+          <Property Name="score" Type="char" MaxLength="1" />
+          <Property Name="bancarizado" Type="char" MaxLength="1" />
+          <Property Name="error" Type="char" MaxLength="1" />
+          <Property Name="mensaje" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="scParametroConfig">
+          <Key>
+            <PropertyRef Name="idparametro" />
+          </Key>
+          <Property Name="idparametro" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="valor" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'bdSecurity.dbo.T1' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="T1">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="150" />
+          <Property Name="apellido" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="tbAccesoIBS">
+          <Key>
+            <PropertyRef Name="CodUsuario" />
+          </Key>
+          <Property Name="CodUsuario" Type="int" Nullable="false" />
+          <Property Name="loginIBS" Type="varchar" MaxLength="50" />
+          <Property Name="passwordIBS" Type="varchar" MaxLength="50" />
+          <Property Name="fechaRegistro" Type="datetime" />
+          <Property Name="fechaActualizacion" Type="datetime" />
+          <Property Name="idUsuarioIBS" Type="bigint" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6005: Actualmente, no se admite el tipo de datos 'sql_variant' para la versión de Entity Framework de destino; se excluyó la columna 'Password' de la tabla 'bdSecurity.dbo.tbAmbientesAplicacion'.
+advertencia 6002: La tabla o vista 'bdSecurity.dbo.tbAmbientesAplicacion' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="tbAmbientesAplicacion">
+          <Key>
+            <PropertyRef Name="CodAmbiente" />
+            <PropertyRef Name="CodAplicacion" />
+            <PropertyRef Name="FuenteDatos" />
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="CodAmbiente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodAplicacion" Type="int" Nullable="false" />
+          <Property Name="NomAmbiente" Type="varchar" MaxLength="50" />
+          <Property Name="Proveedor" Type="varchar" MaxLength="50" />
+          <Property Name="FuenteDatos" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NomBaseDatos" Type="varchar" MaxLength="50" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="tbAplicaciones">
           <Key>
             <PropertyRef Name="CodAplicacion" />
           </Key>
-          <Property Name="CodAplicacion" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CodAplicacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="FechaImplementacion" Type="datetime" Nullable="false" />
           <Property Name="CodTipoAplicacion" Type="int" Nullable="false" />
@@ -54,12 +137,11 @@
             <PropertyRef Name="CodProyecto" />
             <PropertyRef Name="CodAplicacion" />
           </Key>
-          <Property Name="CodProyecto" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="CodProyecto" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="CodAplicacion" Type="int" Nullable="false" />
         </EntityType>
-        <!--Se encontraron errores durante la generación:
-      advertencia 6005: Actualmente, no se admite el tipo de datos 'sql_variant' para la versión de .NET Framework de destino; se excluyó la columna 'Password' de la tabla 'bdSecurity.dbo.tbAplicacionesUsuario'.
-      -->
+        <!--Errores durante la generación:
+advertencia 6005: Actualmente, no se admite el tipo de datos 'sql_variant' para la versión de Entity Framework de destino; se excluyó la columna 'Password' de la tabla 'bdSecurity.dbo.tbAplicacionesUsuario'.-->
         <EntityType Name="tbAplicacionesUsuario">
           <Key>
             <PropertyRef Name="CodUsuario" />
@@ -67,32 +149,193 @@
           </Key>
           <Property Name="CodUsuario" Type="int" Nullable="false" />
           <Property Name="CodAplicacion" Type="int" Nullable="false" />
-          <Property Name="Login" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="Login" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="keyCheck" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tbAreas">
           <Key>
             <PropertyRef Name="CodArea" />
           </Key>
-          <Property Name="CodArea" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CodArea" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CodAreaSuperior" Type="int" />
           <Property Name="Sigla" Type="char" MaxLength="2" />
           <Property Name="NombreCorto" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tbAuditorias">
+          <Key>
+            <PropertyRef Name="CodAuditoria" />
+          </Key>
+          <Property Name="CodAuditoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodUsuario" Type="int" />
+          <Property Name="CodAplicacion" Type="int" />
+          <Property Name="CodPerfil" Type="int" />
+          <Property Name="Login" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="EstacionUsuario" Type="varchar" MaxLength="50" />
+          <Property Name="FechaHoraInicio" Type="datetime" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="tbCargos">
+          <Key>
+            <PropertyRef Name="CodCargo" />
+          </Key>
+          <Property Name="CodCargo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CodArea" Type="int" />
+        </EntityType>
+        <EntityType Name="tbCompanias">
+          <Key>
+            <PropertyRef Name="CodCompania" />
+          </Key>
+          <Property Name="CodCompania" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NumDocumento" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="CodTipoDocumento" Type="int" Nullable="false" />
+          <Property Name="CodTipoCompania" Type="int" Nullable="false" />
+          <Property Name="NomRepresentante" Type="varchar" MaxLength="50" />
+          <Property Name="ApeRepresentante" Type="varchar" MaxLength="50" />
+          <Property Name="NumDocRepresentante" Type="char" MaxLength="10" />
+          <Property Name="CodTipoDocRepresentante" Type="smallint" />
+          <Property Name="FechaVinculacion" Type="datetime" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Website" Type="varchar" MaxLength="50" />
+          <Property Name="Score" Type="smallint" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="UsuarioCreacion" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="FechaUltModificacion" Type="datetime" />
+          <Property Name="UsuarioUltModificacion" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'bdSecurity.dbo.tbDetalleGrupoLog' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="tbDetalleGrupoLog">
+          <Property Name="CodUsuario" Type="bigint" />
+          <Property Name="CodGrupo" Type="int" />
+        </EntityType>-->
+        <EntityType Name="tbDetallesAuditoria">
+          <Key>
+            <PropertyRef Name="CodDetAuditoria" />
+          </Key>
+          <Property Name="CodAuditoria" Type="int" Nullable="false" />
+          <Property Name="CodDetAuditoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FechaHoraAccion" Type="datetime" Nullable="false" />
+          <Property Name="CodOperacion" Type="int" Nullable="false" />
+          <Property Name="DescripcionSQL" Type="varchar" MaxLength="7800" Nullable="false" />
+          <Property Name="CantRegistrosAfectados" Type="int" />
+          <Property Name="ObjetoEfecto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="ObjetoCausa" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbDocumentos">
+          <Key>
+            <PropertyRef Name="CodDocumento" />
+          </Key>
+          <Property Name="CodDocumento" Type="char" MaxLength="7" Nullable="false" />
+          <Property Name="Ubicación" Type="varchar" MaxLength="200" />
+          <Property Name="CodArea" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="CodTipoDoc" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="CodProyecto" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="Version" Type="varchar" MaxLength="50" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'bdSecurity.dbo.tbDominioUnix' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="tbDominioUnix">
+          <Key>
+            <PropertyRef Name="IdMaquina" />
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="IdMaquina" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="255" />
+          <Property Name="GroupName" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="varchar" MaxLength="255" />
+          <Property Name="userid" Type="varchar" MaxLength="255" />
+          <Property Name="prmygroup" Type="varchar" MaxLength="255" />
+          <Property Name="home" Type="varchar" MaxLength="255" />
+          <Property Name="shell" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'bdSecurity.dbo.tbDominioWindows' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="tbDominioWindows">
+          <Key>
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="Login" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="255" />
+          <Property Name="GroupName" Type="varchar" MaxLength="50" />
+          <Property Name="Comment" Type="varchar" MaxLength="255" />
+          <Property Name="AccountType" Type="varchar" MaxLength="255" />
+          <Property Name="HomeDrive" Type="varchar" MaxLength="255" />
+          <Property Name="HomeDir" Type="varchar" MaxLength="255" />
+          <Property Name="Profile" Type="varchar" MaxLength="255" />
+          <Property Name="LogonScript" Type="varchar" MaxLength="255" />
+          <Property Name="Workstations" Type="varchar" MaxLength="255" />
+          <Property Name="PswdCanBeChanged" Type="varchar" MaxLength="255" />
+          <Property Name="PswdLastSetTime" Type="varchar" MaxLength="255" />
+          <Property Name="PswdRequired" Type="varchar" MaxLength="255" />
+          <Property Name="PswdExpires" Type="varchar" MaxLength="255" />
+          <Property Name="PswdExpiresTime" Type="varchar" MaxLength="255" />
+          <Property Name="AcctDisabled" Type="varchar" MaxLength="255" />
+          <Property Name="AcctLockedOut" Type="varchar" MaxLength="255" />
+          <Property Name="AcctExpiresTime" Type="varchar" MaxLength="255" />
+          <Property Name="LastLogonTime" Type="varchar" MaxLength="255" />
+          <Property Name="LastLogonServer" Type="varchar" MaxLength="255" />
+          <Property Name="LogonHours" Type="varchar" MaxLength="255" />
+          <Property Name="Sid" Type="varchar" MaxLength="255" />
+          <Property Name="RasDialin" Type="varchar" MaxLength="255" />
+          <Property Name="RasCallback" Type="varchar" MaxLength="255" />
+          <Property Name="RasCallbackNumber" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="tbEstados">
           <Key>
             <PropertyRef Name="CodEstado" />
           </Key>
-          <Property Name="CodEstado" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CodEstado" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbLogAcceso">
+          <Key>
+            <PropertyRef Name="idlog" />
+          </Key>
+          <Property Name="idlog" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codusuario" Type="int" />
+          <Property Name="fecregistro" Type="datetime" />
+          <Property Name="codaplicacion" Type="int" />
+          <Property Name="tipolog" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="tbOpciones">
+          <Key>
+            <PropertyRef Name="CodOpcion" />
+          </Key>
+          <Property Name="CodOpcion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="CodAplicacion" Type="int" />
+          <Property Name="CodOpcionPadre" Type="int" />
+          <Property Name="URL" Type="varchar" MaxLength="512" />
+          <Property Name="description" Type="varchar" MaxLength="512" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
+          <Property Name="icono" Type="varchar" MaxLength="50" />
+          <Property Name="jsfunction" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbOpcionesPerfil">
+          <Key>
+            <PropertyRef Name="CodPerfil" />
+            <PropertyRef Name="CodOpcion" />
+          </Key>
+          <Property Name="CodPerfil" Type="int" Nullable="false" />
+          <Property Name="CodOpcion" Type="int" Nullable="false" />
+          <Property Name="PermisoCreacion" Type="bit" />
+          <Property Name="PermisoConsulta" Type="bit" />
+          <Property Name="PermisoActualizacion" Type="bit" />
+          <Property Name="PermisoBorrado" Type="bit" />
         </EntityType>
         <EntityType Name="tbPerfiles">
           <Key>
             <PropertyRef Name="CodPerfil" />
           </Key>
-          <Property Name="CodPerfil" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CodPerfil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CodAplicacion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tbPerfilesUsuario">
@@ -105,14 +348,57 @@
           <Property Name="CodUsuario" Type="int" Nullable="false" />
           <Property Name="CodAplicacion" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="tbProyectos">
+          <Key>
+            <PropertyRef Name="CodProyecto" />
+          </Key>
+          <Property Name="CodProyecto" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NombreInt" Type="varchar" MaxLength="50" />
+          <Property Name="UbicacionDe" Type="varchar" MaxLength="200" />
+          <Property Name="UbicacionPro" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tbSiteMap">
+          <Key>
+            <PropertyRef Name="CodSiteMap" />
+          </Key>
+          <Property Name="CodSiteMap" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="512" />
+          <Property Name="Url" Type="varchar" MaxLength="512" />
+          <Property Name="Parent" Type="int" />
+          <Property Name="CodOpcion" Type="int" />
+          <Property Name="CodAplicacion" Type="int" />
+        </EntityType>
+        <EntityType Name="tbTipoDocumentos">
+          <Key>
+            <PropertyRef Name="CodTipoDocumento" />
+          </Key>
+          <Property Name="CodTipoDocumento" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbTiposAplicacion">
+          <Key>
+            <PropertyRef Name="CodTipoAplicacion" />
+          </Key>
+          <Property Name="CodTipoAplicacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbTiposCompania">
+          <Key>
+            <PropertyRef Name="CodTipoCompania" />
+          </Key>
+          <Property Name="CodTipoCompania" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomTipoCompania" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="tbUsuarios">
           <Key>
             <PropertyRef Name="CodUsuario" />
           </Key>
-          <Property Name="CodUsuario" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Cedula" Type="varchar" Nullable="false" MaxLength="16" />
-          <Property Name="Nombres" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="Apellidos" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CodUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cedula" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TelCasa" Type="varchar" MaxLength="20" />
           <Property Name="DirCasa" Type="varchar" MaxLength="120" />
           <Property Name="GrupoSanguineo" Type="int" />
@@ -124,7 +410,7 @@
           <Property Name="CodTipoContrato" Type="int" Nullable="false" />
           <Property Name="EMail" Type="varchar" MaxLength="500" />
           <Property Name="Celular" Type="varchar" MaxLength="20" />
-          <Property Name="CodEstado" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="CodEstado" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="userNT" Type="nvarchar" MaxLength="255" />
           <Property Name="IsLockedOut" Type="bit" Nullable="false" />
           <Property Name="LastLockedOutDate" Type="smalldatetime" />
@@ -138,9 +424,44 @@
           <Property Name="Foto" Type="image" />
           <Property Name="idUsuarioIBS" Type="int" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'bdSecurity.dbo.temp' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="temp">
+          <Property Name="cod" Type="varchar" MaxLength="50" />
+          <Property Name="mail" Type="varchar" MaxLength="50" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'bdSecurity.dbo.TEMP_TEXTO' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="TEMP_TEXTO">
+          <Property Name="TEXTO" Type="varchar" MaxLength="300" />
+        </EntityType>-->
+        <Association Name="FK__scConsult__idcon__0268428D">
+          <End Role="scConsultaMasiva" Type="Self.scConsultaMasiva" Multiplicity="0..1" />
+          <End Role="scConsultaMasiva_Detalle" Type="Self.scConsultaMasiva_Detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scConsultaMasiva">
+              <PropertyRef Name="idconsulta" />
+            </Principal>
+            <Dependent Role="scConsultaMasiva_Detalle">
+              <PropertyRef Name="idconsulta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbAplicaciones_tbTiposAplicacion">
+          <End Role="tbTiposAplicacion" Type="Self.tbTiposAplicacion" Multiplicity="1" />
+          <End Role="tbAplicaciones" Type="Self.tbAplicaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTiposAplicacion">
+              <PropertyRef Name="CodTipoAplicacion" />
+            </Principal>
+            <Dependent Role="tbAplicaciones">
+              <PropertyRef Name="CodTipoAplicacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbAplicacionesProyecto_tbAplicaciones">
-          <End Role="tbAplicaciones" Type="bdSecurityModel.Store.tbAplicaciones" Multiplicity="1" />
-          <End Role="tbAplicacionesProyecto" Type="bdSecurityModel.Store.tbAplicacionesProyecto" Multiplicity="*" />
+          <End Role="tbAplicaciones" Type="Self.tbAplicaciones" Multiplicity="1" />
+          <End Role="tbAplicacionesProyecto" Type="Self.tbAplicacionesProyecto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbAplicaciones">
               <PropertyRef Name="CodAplicacion" />
@@ -150,9 +471,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tbAplicacionesProyecto_tbProyectos">
+          <End Role="tbProyectos" Type="Self.tbProyectos" Multiplicity="1" />
+          <End Role="tbAplicacionesProyecto" Type="Self.tbAplicacionesProyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbProyectos">
+              <PropertyRef Name="CodProyecto" />
+            </Principal>
+            <Dependent Role="tbAplicacionesProyecto">
+              <PropertyRef Name="CodProyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbAplicacionesUsuario_tbAplicaciones">
-          <End Role="tbAplicaciones" Type="bdSecurityModel.Store.tbAplicaciones" Multiplicity="1" />
-          <End Role="tbAplicacionesUsuario" Type="bdSecurityModel.Store.tbAplicacionesUsuario" Multiplicity="*" />
+          <End Role="tbAplicaciones" Type="Self.tbAplicaciones" Multiplicity="1" />
+          <End Role="tbAplicacionesUsuario" Type="Self.tbAplicacionesUsuario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbAplicaciones">
               <PropertyRef Name="CodAplicacion" />
@@ -163,8 +496,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbAplicacionesUsuario_tbUsuarios">
-          <End Role="tbUsuarios" Type="bdSecurityModel.Store.tbUsuarios" Multiplicity="1" />
-          <End Role="tbAplicacionesUsuario" Type="bdSecurityModel.Store.tbAplicacionesUsuario" Multiplicity="*" />
+          <End Role="tbUsuarios" Type="Self.tbUsuarios" Multiplicity="1" />
+          <End Role="tbAplicacionesUsuario" Type="Self.tbAplicacionesUsuario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbUsuarios">
               <PropertyRef Name="CodUsuario" />
@@ -175,8 +508,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbAreas_tbAreas">
-          <End Role="tbAreas" Type="bdSecurityModel.Store.tbAreas" Multiplicity="0..1" />
-          <End Role="tbAreas1" Type="bdSecurityModel.Store.tbAreas" Multiplicity="*" />
+          <End Role="tbAreas" Type="Self.tbAreas" Multiplicity="0..1" />
+          <End Role="tbAreas1" Type="Self.tbAreas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbAreas">
               <PropertyRef Name="CodArea" />
@@ -186,9 +519,93 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tbCargos_tbAreas">
+          <End Role="tbAreas" Type="Self.tbAreas" Multiplicity="0..1" />
+          <End Role="tbCargos" Type="Self.tbCargos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbAreas">
+              <PropertyRef Name="CodArea" />
+            </Principal>
+            <Dependent Role="tbCargos">
+              <PropertyRef Name="CodArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbDetAuditoria_tbAuditoria">
+          <End Role="tbAuditorias" Type="Self.tbAuditorias" Multiplicity="1" />
+          <End Role="tbDetallesAuditoria" Type="Self.tbDetallesAuditoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbAuditorias">
+              <PropertyRef Name="CodAuditoria" />
+            </Principal>
+            <Dependent Role="tbDetallesAuditoria">
+              <PropertyRef Name="CodAuditoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbDocumentos_tbProyectos">
+          <End Role="tbProyectos" Type="Self.tbProyectos" Multiplicity="1" />
+          <End Role="tbDocumentos" Type="Self.tbDocumentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbProyectos">
+              <PropertyRef Name="CodProyecto" />
+            </Principal>
+            <Dependent Role="tbDocumentos">
+              <PropertyRef Name="CodProyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbDocumentos_tbTipoDocumentos">
+          <End Role="tbTipoDocumentos" Type="Self.tbTipoDocumentos" Multiplicity="1" />
+          <End Role="tbDocumentos" Type="Self.tbDocumentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTipoDocumentos">
+              <PropertyRef Name="CodTipoDocumento" />
+            </Principal>
+            <Dependent Role="tbDocumentos">
+              <PropertyRef Name="CodTipoDoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbOpciones_tbAplicaciones">
+          <End Role="tbAplicaciones" Type="Self.tbAplicaciones" Multiplicity="0..1" />
+          <End Role="tbOpciones" Type="Self.tbOpciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbAplicaciones">
+              <PropertyRef Name="CodAplicacion" />
+            </Principal>
+            <Dependent Role="tbOpciones">
+              <PropertyRef Name="CodAplicacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbOpcionesPerfil_tbOpciones">
+          <End Role="tbOpciones" Type="Self.tbOpciones" Multiplicity="1" />
+          <End Role="tbOpcionesPerfil" Type="Self.tbOpcionesPerfil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbOpciones">
+              <PropertyRef Name="CodOpcion" />
+            </Principal>
+            <Dependent Role="tbOpcionesPerfil">
+              <PropertyRef Name="CodOpcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbOpcionesPerfil_tbPerfiles">
+          <End Role="tbPerfiles" Type="Self.tbPerfiles" Multiplicity="1" />
+          <End Role="tbOpcionesPerfil" Type="Self.tbOpcionesPerfil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbPerfiles">
+              <PropertyRef Name="CodPerfil" />
+            </Principal>
+            <Dependent Role="tbOpcionesPerfil">
+              <PropertyRef Name="CodPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbPerfiles_tbAplicaciones">
-          <End Role="tbAplicaciones" Type="bdSecurityModel.Store.tbAplicaciones" Multiplicity="1" />
-          <End Role="tbPerfiles" Type="bdSecurityModel.Store.tbPerfiles" Multiplicity="*" />
+          <End Role="tbAplicaciones" Type="Self.tbAplicaciones" Multiplicity="1" />
+          <End Role="tbPerfiles" Type="Self.tbPerfiles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbAplicaciones">
               <PropertyRef Name="CodAplicacion" />
@@ -199,8 +616,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbPerfilesUsuario_tbPerfiles">
-          <End Role="tbPerfiles" Type="bdSecurityModel.Store.tbPerfiles" Multiplicity="1" />
-          <End Role="tbPerfilesUsuario" Type="bdSecurityModel.Store.tbPerfilesUsuario" Multiplicity="*" />
+          <End Role="tbPerfiles" Type="Self.tbPerfiles" Multiplicity="1" />
+          <End Role="tbPerfilesUsuario" Type="Self.tbPerfilesUsuario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbPerfiles">
               <PropertyRef Name="CodPerfil" />
@@ -210,66 +627,269 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tbSiteMap_tbOpciones">
+          <End Role="tbOpciones" Type="Self.tbOpciones" Multiplicity="0..1" />
+          <End Role="tbSiteMap" Type="Self.tbSiteMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbOpciones">
+              <PropertyRef Name="CodOpcion" />
+            </Principal>
+            <Dependent Role="tbSiteMap">
+              <PropertyRef Name="CodOpcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BdSecurityStoreContainer">
+          <EntitySet Name="dtproperties" EntityType="Self.dtproperties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scConsultaMasiva" EntityType="Self.scConsultaMasiva" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scParametroConfig" EntityType="Self.scParametroConfig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbAccesoIBS" EntityType="Self.tbAccesoIBS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbAplicaciones" EntityType="Self.tbAplicaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbAplicacionesProyecto" EntityType="Self.tbAplicacionesProyecto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbAplicacionesUsuario" EntityType="Self.tbAplicacionesUsuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbAreas" EntityType="Self.tbAreas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbAuditorias" EntityType="Self.tbAuditorias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbCargos" EntityType="Self.tbCargos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbCompanias" EntityType="Self.tbCompanias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbDetallesAuditoria" EntityType="Self.tbDetallesAuditoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbDocumentos" EntityType="Self.tbDocumentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbEstados" EntityType="Self.tbEstados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbLogAcceso" EntityType="Self.tbLogAcceso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbOpciones" EntityType="Self.tbOpciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbOpcionesPerfil" EntityType="Self.tbOpcionesPerfil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbPerfiles" EntityType="Self.tbPerfiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbPerfilesUsuario" EntityType="Self.tbPerfilesUsuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbProyectos" EntityType="Self.tbProyectos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbSiteMap" EntityType="Self.tbSiteMap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbTipoDocumentos" EntityType="Self.tbTipoDocumentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbTiposAplicacion" EntityType="Self.tbTiposAplicacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbTiposCompania" EntityType="Self.tbTiposCompania" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbUsuarios" EntityType="Self.tbUsuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scConsultaMasiva_Detalle" EntityType="Self.scConsultaMasiva_Detalle" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[scConsultaMasiva_Detalle].[idcmDetalle] AS [idcmDetalle], 
+[scConsultaMasiva_Detalle].[idconsulta] AS [idconsulta], 
+[scConsultaMasiva_Detalle].[tipodoc] AS [tipodoc], 
+[scConsultaMasiva_Detalle].[numerodocumento] AS [numerodocumento], 
+[scConsultaMasiva_Detalle].[apellido] AS [apellido], 
+[scConsultaMasiva_Detalle].[departamento] AS [departamento], 
+[scConsultaMasiva_Detalle].[idusuario] AS [idusuario], 
+[scConsultaMasiva_Detalle].[producto] AS [producto], 
+[scConsultaMasiva_Detalle].[numdecos] AS [numdecos], 
+[scConsultaMasiva_Detalle].[provincia] AS [provincia], 
+[scConsultaMasiva_Detalle].[distrito] AS [distrito], 
+[scConsultaMasiva_Detalle].[score] AS [score], 
+[scConsultaMasiva_Detalle].[bancarizado] AS [bancarizado], 
+[scConsultaMasiva_Detalle].[error] AS [error], 
+[scConsultaMasiva_Detalle].[mensaje] AS [mensaje]
+FROM [dbo].[scConsultaMasiva_Detalle] AS [scConsultaMasiva_Detalle]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="T1" EntityType="Self.T1" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[T1].[id] AS [id], 
+[T1].[nombre] AS [nombre], 
+[T1].[apellido] AS [apellido]
+FROM [dbo].[T1] AS [T1]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbAmbientesAplicacion" EntityType="Self.tbAmbientesAplicacion" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[tbAmbientesAplicacion].[CodAmbiente] AS [CodAmbiente], 
+[tbAmbientesAplicacion].[CodAplicacion] AS [CodAplicacion], 
+[tbAmbientesAplicacion].[NomAmbiente] AS [NomAmbiente], 
+[tbAmbientesAplicacion].[Proveedor] AS [Proveedor], 
+[tbAmbientesAplicacion].[FuenteDatos] AS [FuenteDatos], 
+[tbAmbientesAplicacion].[NomBaseDatos] AS [NomBaseDatos], 
+[tbAmbientesAplicacion].[Login] AS [Login]
+FROM [dbo].[tbAmbientesAplicacion] AS [tbAmbientesAplicacion]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbDominioUnix" EntityType="Self.tbDominioUnix" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[tbDominioUnix].[IdMaquina] AS [IdMaquina], 
+[tbDominioUnix].[Login] AS [Login], 
+[tbDominioUnix].[FullName] AS [FullName], 
+[tbDominioUnix].[GroupName] AS [GroupName], 
+[tbDominioUnix].[password] AS [password], 
+[tbDominioUnix].[userid] AS [userid], 
+[tbDominioUnix].[prmygroup] AS [prmygroup], 
+[tbDominioUnix].[home] AS [home], 
+[tbDominioUnix].[shell] AS [shell]
+FROM [dbo].[tbDominioUnix] AS [tbDominioUnix]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbDominioWindows" EntityType="Self.tbDominioWindows" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[tbDominioWindows].[Login] AS [Login], 
+[tbDominioWindows].[FullName] AS [FullName], 
+[tbDominioWindows].[GroupName] AS [GroupName], 
+[tbDominioWindows].[Comment] AS [Comment], 
+[tbDominioWindows].[AccountType] AS [AccountType], 
+[tbDominioWindows].[HomeDrive] AS [HomeDrive], 
+[tbDominioWindows].[HomeDir] AS [HomeDir], 
+[tbDominioWindows].[Profile] AS [Profile], 
+[tbDominioWindows].[LogonScript] AS [LogonScript], 
+[tbDominioWindows].[Workstations] AS [Workstations], 
+[tbDominioWindows].[PswdCanBeChanged] AS [PswdCanBeChanged], 
+[tbDominioWindows].[PswdLastSetTime] AS [PswdLastSetTime], 
+[tbDominioWindows].[PswdRequired] AS [PswdRequired], 
+[tbDominioWindows].[PswdExpires] AS [PswdExpires], 
+[tbDominioWindows].[PswdExpiresTime] AS [PswdExpiresTime], 
+[tbDominioWindows].[AcctDisabled] AS [AcctDisabled], 
+[tbDominioWindows].[AcctLockedOut] AS [AcctLockedOut], 
+[tbDominioWindows].[AcctExpiresTime] AS [AcctExpiresTime], 
+[tbDominioWindows].[LastLogonTime] AS [LastLogonTime], 
+[tbDominioWindows].[LastLogonServer] AS [LastLogonServer], 
+[tbDominioWindows].[LogonHours] AS [LogonHours], 
+[tbDominioWindows].[Sid] AS [Sid], 
+[tbDominioWindows].[RasDialin] AS [RasDialin], 
+[tbDominioWindows].[RasCallback] AS [RasCallback], 
+[tbDominioWindows].[RasCallbackNumber] AS [RasCallbackNumber]
+FROM [dbo].[tbDominioWindows] AS [tbDominioWindows]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__scConsult__idcon__0268428D" Association="Self.FK__scConsult__idcon__0268428D">
+            <End Role="scConsultaMasiva" EntitySet="scConsultaMasiva" />
+            <End Role="scConsultaMasiva_Detalle" EntitySet="scConsultaMasiva_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbAplicaciones_tbTiposAplicacion" Association="Self.FK_tbAplicaciones_tbTiposAplicacion">
+            <End Role="tbTiposAplicacion" EntitySet="tbTiposAplicacion" />
+            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbAplicacionesProyecto_tbAplicaciones" Association="Self.FK_tbAplicacionesProyecto_tbAplicaciones">
+            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
+            <End Role="tbAplicacionesProyecto" EntitySet="tbAplicacionesProyecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbAplicacionesProyecto_tbProyectos" Association="Self.FK_tbAplicacionesProyecto_tbProyectos">
+            <End Role="tbProyectos" EntitySet="tbProyectos" />
+            <End Role="tbAplicacionesProyecto" EntitySet="tbAplicacionesProyecto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbAplicacionesUsuario_tbAplicaciones" Association="Self.FK_tbAplicacionesUsuario_tbAplicaciones">
+            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
+            <End Role="tbAplicacionesUsuario" EntitySet="tbAplicacionesUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbAplicacionesUsuario_tbUsuarios" Association="Self.FK_tbAplicacionesUsuario_tbUsuarios">
+            <End Role="tbUsuarios" EntitySet="tbUsuarios" />
+            <End Role="tbAplicacionesUsuario" EntitySet="tbAplicacionesUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbAreas_tbAreas" Association="Self.FK_tbAreas_tbAreas">
+            <End Role="tbAreas" EntitySet="tbAreas" />
+            <End Role="tbAreas1" EntitySet="tbAreas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbCargos_tbAreas" Association="Self.FK_tbCargos_tbAreas">
+            <End Role="tbAreas" EntitySet="tbAreas" />
+            <End Role="tbCargos" EntitySet="tbCargos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbDetAuditoria_tbAuditoria" Association="Self.FK_tbDetAuditoria_tbAuditoria">
+            <End Role="tbAuditorias" EntitySet="tbAuditorias" />
+            <End Role="tbDetallesAuditoria" EntitySet="tbDetallesAuditoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbDocumentos_tbProyectos" Association="Self.FK_tbDocumentos_tbProyectos">
+            <End Role="tbProyectos" EntitySet="tbProyectos" />
+            <End Role="tbDocumentos" EntitySet="tbDocumentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbDocumentos_tbTipoDocumentos" Association="Self.FK_tbDocumentos_tbTipoDocumentos">
+            <End Role="tbTipoDocumentos" EntitySet="tbTipoDocumentos" />
+            <End Role="tbDocumentos" EntitySet="tbDocumentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbOpciones_tbAplicaciones" Association="Self.FK_tbOpciones_tbAplicaciones">
+            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
+            <End Role="tbOpciones" EntitySet="tbOpciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbOpcionesPerfil_tbOpciones" Association="Self.FK_tbOpcionesPerfil_tbOpciones">
+            <End Role="tbOpciones" EntitySet="tbOpciones" />
+            <End Role="tbOpcionesPerfil" EntitySet="tbOpcionesPerfil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbOpcionesPerfil_tbPerfiles" Association="Self.FK_tbOpcionesPerfil_tbPerfiles">
+            <End Role="tbPerfiles" EntitySet="tbPerfiles" />
+            <End Role="tbOpcionesPerfil" EntitySet="tbOpcionesPerfil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbPerfiles_tbAplicaciones" Association="Self.FK_tbPerfiles_tbAplicaciones">
+            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
+            <End Role="tbPerfiles" EntitySet="tbPerfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbPerfilesUsuario_tbPerfiles" Association="Self.FK_tbPerfilesUsuario_tbPerfiles">
+            <End Role="tbPerfiles" EntitySet="tbPerfiles" />
+            <End Role="tbPerfilesUsuario" EntitySet="tbPerfilesUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbSiteMap_tbOpciones" Association="Self.FK_tbSiteMap_tbOpciones">
+            <End Role="tbOpciones" EntitySet="tbOpciones" />
+            <End Role="tbSiteMap" EntitySet="tbSiteMap" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="bdSecurityModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="bdSecurityEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tbAplicaciones" EntityType="bdSecurityModel.tbAplicaciones" />
-          <EntitySet Name="tbAplicacionesProyecto" EntityType="bdSecurityModel.tbAplicacionesProyecto" />
-          <EntitySet Name="tbAplicacionesUsuario" EntityType="bdSecurityModel.tbAplicacionesUsuario" />
-          <EntitySet Name="tbAreas" EntityType="bdSecurityModel.tbAreas" />
-          <EntitySet Name="tbEstados" EntityType="bdSecurityModel.tbEstados" />
-          <EntitySet Name="tbPerfiles" EntityType="bdSecurityModel.tbPerfiles" />
-          <EntitySet Name="tbPerfilesUsuario" EntityType="bdSecurityModel.tbPerfilesUsuario" />
-          <EntitySet Name="tbUsuarios" EntityType="bdSecurityModel.tbUsuarios" />
-          <AssociationSet Name="FK_tbAplicacionesProyecto_tbAplicaciones" Association="bdSecurityModel.FK_tbAplicacionesProyecto_tbAplicaciones">
-            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
-            <End Role="tbAplicacionesProyecto" EntitySet="tbAplicacionesProyecto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbAplicacionesUsuario_tbAplicaciones" Association="bdSecurityModel.FK_tbAplicacionesUsuario_tbAplicaciones">
-            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
-            <End Role="tbAplicacionesUsuario" EntitySet="tbAplicacionesUsuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbPerfiles_tbAplicaciones" Association="bdSecurityModel.FK_tbPerfiles_tbAplicaciones">
-            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
-            <End Role="tbPerfiles" EntitySet="tbPerfiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbAplicacionesUsuario_tbUsuarios" Association="bdSecurityModel.FK_tbAplicacionesUsuario_tbUsuarios">
-            <End Role="tbUsuarios" EntitySet="tbUsuarios" />
-            <End Role="tbAplicacionesUsuario" EntitySet="tbAplicacionesUsuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbAreas_tbAreas" Association="bdSecurityModel.FK_tbAreas_tbAreas">
-            <End Role="tbAreas" EntitySet="tbAreas" />
-            <End Role="tbAreas1" EntitySet="tbAreas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbPerfilesUsuario_tbPerfiles" Association="bdSecurityModel.FK_tbPerfilesUsuario_tbPerfiles">
-            <End Role="tbPerfiles" EntitySet="tbPerfiles" />
-            <End Role="tbPerfilesUsuario" EntitySet="tbPerfilesUsuario" />
-          </AssociationSet>
-        </EntityContainer>
+      <Schema Namespace="BdSecurity" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityType Name="dtproperties">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="property" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="objectid" Type="Int32" />
+          <Property Name="property" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="uvalue" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="lvalue" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="version" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="scConsultaMasiva">
+          <Key>
+            <PropertyRef Name="idconsulta" />
+          </Key>
+          <Property Name="idconsulta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idusuario" Type="Int32" Nullable="false" />
+          <Property Name="fechaInicia" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fechaFin" Type="DateTime" Precision="3" />
+          <Property Name="rutafile" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="mensaje" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="rutaOrigen" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="idUsuarioEnvio" Type="Int32" />
+          <NavigationProperty Name="scConsultaMasiva_Detalle" Relationship="Self.FK__scConsult__idcon__0268428D" FromRole="scConsultaMasiva" ToRole="scConsultaMasiva_Detalle" />
+        </EntityType>
+        <EntityType Name="scParametroConfig">
+          <Key>
+            <PropertyRef Name="idparametro" />
+          </Key>
+          <Property Name="idparametro" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="valor" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tbAccesoIBS">
+          <Key>
+            <PropertyRef Name="CodUsuario" />
+          </Key>
+          <Property Name="CodUsuario" Type="Int32" Nullable="false" />
+          <Property Name="loginIBS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="passwordIBS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fechaRegistro" Type="DateTime" Precision="3" />
+          <Property Name="fechaActualizacion" Type="DateTime" Precision="3" />
+          <Property Name="idUsuarioIBS" Type="Int64" />
+        </EntityType>
         <EntityType Name="tbAplicaciones">
           <Key>
             <PropertyRef Name="CodAplicacion" />
           </Key>
           <Property Name="CodAplicacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FechaImplementacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CodTipoAplicacion" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tbAplicacionesProyecto" Relationship="bdSecurityModel.FK_tbAplicacionesProyecto_tbAplicaciones" FromRole="tbAplicaciones" ToRole="tbAplicacionesProyecto" />
-          <NavigationProperty Name="tbAplicacionesUsuario" Relationship="bdSecurityModel.FK_tbAplicacionesUsuario_tbAplicaciones" FromRole="tbAplicaciones" ToRole="tbAplicacionesUsuario" />
-          <NavigationProperty Name="tbPerfiles" Relationship="bdSecurityModel.FK_tbPerfiles_tbAplicaciones" FromRole="tbAplicaciones" ToRole="tbPerfiles" />
-        </EntityType>
-        <EntityType Name="tbAplicacionesProyecto">
-          <Key>
-            <PropertyRef Name="CodProyecto" />
-            <PropertyRef Name="CodAplicacion" />
-          </Key>
-          <Property Name="CodProyecto" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
-          <Property Name="CodAplicacion" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tbAplicaciones" Relationship="bdSecurityModel.FK_tbAplicacionesProyecto_tbAplicaciones" FromRole="tbAplicacionesProyecto" ToRole="tbAplicaciones" />
+          <NavigationProperty Name="tbTiposAplicacion" Relationship="Self.FK_tbAplicaciones_tbTiposAplicacion" FromRole="tbAplicaciones" ToRole="tbTiposAplicacion" />
+          <NavigationProperty Name="tbAplicacionesUsuario" Relationship="Self.FK_tbAplicacionesUsuario_tbAplicaciones" FromRole="tbAplicaciones" ToRole="tbAplicacionesUsuario" />
+          <NavigationProperty Name="tbOpciones" Relationship="Self.FK_tbOpciones_tbAplicaciones" FromRole="tbAplicaciones" ToRole="tbOpciones" />
+          <NavigationProperty Name="tbPerfiles" Relationship="Self.FK_tbPerfiles_tbAplicaciones" FromRole="tbAplicaciones" ToRole="tbPerfiles" />
+          <NavigationProperty Name="tbProyectos" Relationship="Self.tbAplicacionesProyecto" FromRole="tbAplicaciones" ToRole="tbProyectos" />
         </EntityType>
         <EntityType Name="tbAplicacionesUsuario">
           <Key>
@@ -278,39 +898,157 @@
           </Key>
           <Property Name="CodUsuario" Type="Int32" Nullable="false" />
           <Property Name="CodAplicacion" Type="Int32" Nullable="false" />
-          <Property Name="Login" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="keyCheck" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="tbAplicaciones" Relationship="bdSecurityModel.FK_tbAplicacionesUsuario_tbAplicaciones" FromRole="tbAplicacionesUsuario" ToRole="tbAplicaciones" />
-          <NavigationProperty Name="tbUsuarios" Relationship="bdSecurityModel.FK_tbAplicacionesUsuario_tbUsuarios" FromRole="tbAplicacionesUsuario" ToRole="tbUsuarios" />
+          <Property Name="Login" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="keyCheck" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbAplicaciones" Relationship="Self.FK_tbAplicacionesUsuario_tbAplicaciones" FromRole="tbAplicacionesUsuario" ToRole="tbAplicaciones" />
+          <NavigationProperty Name="tbUsuarios" Relationship="Self.FK_tbAplicacionesUsuario_tbUsuarios" FromRole="tbAplicacionesUsuario" ToRole="tbUsuarios" />
         </EntityType>
         <EntityType Name="tbAreas">
           <Key>
             <PropertyRef Name="CodArea" />
           </Key>
           <Property Name="CodArea" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodAreaSuperior" Type="Int32" />
-          <Property Name="Sigla" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-          <Property Name="NombreCorto" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="tbAreas1" Relationship="bdSecurityModel.FK_tbAreas_tbAreas" FromRole="tbAreas" ToRole="tbAreas1" />
-          <NavigationProperty Name="tbAreas2" Relationship="bdSecurityModel.FK_tbAreas_tbAreas" FromRole="tbAreas1" ToRole="tbAreas" />
+          <Property Name="Sigla" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="NombreCorto" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbAreas1" Relationship="Self.FK_tbAreas_tbAreas" FromRole="tbAreas" ToRole="tbAreas1" />
+          <NavigationProperty Name="tbAreas2" Relationship="Self.FK_tbAreas_tbAreas" FromRole="tbAreas1" ToRole="tbAreas" />
+          <NavigationProperty Name="tbCargos" Relationship="Self.FK_tbCargos_tbAreas" FromRole="tbAreas" ToRole="tbCargos" />
+        </EntityType>
+        <EntityType Name="tbAuditorias">
+          <Key>
+            <PropertyRef Name="CodAuditoria" />
+          </Key>
+          <Property Name="CodAuditoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodUsuario" Type="Int32" />
+          <Property Name="CodAplicacion" Type="Int32" />
+          <Property Name="CodPerfil" Type="Int32" />
+          <Property Name="Login" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstacionUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaHoraInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbDetallesAuditoria" Relationship="Self.FK_tbDetAuditoria_tbAuditoria" FromRole="tbAuditorias" ToRole="tbDetallesAuditoria" />
+        </EntityType>
+        <EntityType Name="tbCargos">
+          <Key>
+            <PropertyRef Name="CodCargo" />
+          </Key>
+          <Property Name="CodCargo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CodArea" Type="Int32" />
+          <NavigationProperty Name="tbAreas" Relationship="Self.FK_tbCargos_tbAreas" FromRole="tbCargos" ToRole="tbAreas" />
+        </EntityType>
+        <EntityType Name="tbCompanias">
+          <Key>
+            <PropertyRef Name="CodCompania" />
+          </Key>
+          <Property Name="CodCompania" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RazonSocial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumDocumento" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CodTipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="CodTipoCompania" Type="Int32" Nullable="false" />
+          <Property Name="NomRepresentante" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApeRepresentante" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NumDocRepresentante" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="CodTipoDocRepresentante" Type="Int16" />
+          <Property Name="FechaVinculacion" Type="DateTime" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Score" Type="Int16" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UsuarioCreacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaUltModificacion" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioUltModificacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbDetallesAuditoria">
+          <Key>
+            <PropertyRef Name="CodDetAuditoria" />
+          </Key>
+          <Property Name="CodAuditoria" Type="Int32" Nullable="false" />
+          <Property Name="CodDetAuditoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FechaHoraAccion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CodOperacion" Type="Int32" Nullable="false" />
+          <Property Name="DescripcionSQL" Type="String" MaxLength="7800" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CantRegistrosAfectados" Type="Int32" />
+          <Property Name="ObjetoEfecto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ObjetoCausa" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbAuditorias" Relationship="Self.FK_tbDetAuditoria_tbAuditoria" FromRole="tbDetallesAuditoria" ToRole="tbAuditorias" />
+        </EntityType>
+        <EntityType Name="tbDocumentos">
+          <Key>
+            <PropertyRef Name="CodDocumento" />
+          </Key>
+          <Property Name="CodDocumento" Type="String" MaxLength="7" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Ubicación" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CodArea" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CodTipoDoc" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CodProyecto" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Version" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbProyectos" Relationship="Self.FK_tbDocumentos_tbProyectos" FromRole="tbDocumentos" ToRole="tbProyectos" />
+          <NavigationProperty Name="tbTipoDocumentos" Relationship="Self.FK_tbDocumentos_tbTipoDocumentos" FromRole="tbDocumentos" ToRole="tbTipoDocumentos" />
         </EntityType>
         <EntityType Name="tbEstados">
           <Key>
             <PropertyRef Name="CodEstado" />
           </Key>
-          <Property Name="CodEstado" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="CodEstado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbLogAcceso">
+          <Key>
+            <PropertyRef Name="idlog" />
+          </Key>
+          <Property Name="idlog" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codusuario" Type="Int32" />
+          <Property Name="fecregistro" Type="DateTime" Precision="3" />
+          <Property Name="codaplicacion" Type="Int32" />
+          <Property Name="tipolog" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbOpciones">
+          <Key>
+            <PropertyRef Name="CodOpcion" />
+          </Key>
+          <Property Name="CodOpcion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodAplicacion" Type="Int32" />
+          <Property Name="CodOpcionPadre" Type="Int32" />
+          <Property Name="URL" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="icono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jsfunction" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbAplicaciones" Relationship="Self.FK_tbOpciones_tbAplicaciones" FromRole="tbOpciones" ToRole="tbAplicaciones" />
+          <NavigationProperty Name="tbOpcionesPerfil" Relationship="Self.FK_tbOpcionesPerfil_tbOpciones" FromRole="tbOpciones" ToRole="tbOpcionesPerfil" />
+          <NavigationProperty Name="tbSiteMap" Relationship="Self.FK_tbSiteMap_tbOpciones" FromRole="tbOpciones" ToRole="tbSiteMap" />
+        </EntityType>
+        <EntityType Name="tbOpcionesPerfil">
+          <Key>
+            <PropertyRef Name="CodPerfil" />
+            <PropertyRef Name="CodOpcion" />
+          </Key>
+          <Property Name="CodPerfil" Type="Int32" Nullable="false" />
+          <Property Name="CodOpcion" Type="Int32" Nullable="false" />
+          <Property Name="PermisoCreacion" Type="Boolean" />
+          <Property Name="PermisoConsulta" Type="Boolean" />
+          <Property Name="PermisoActualizacion" Type="Boolean" />
+          <Property Name="PermisoBorrado" Type="Boolean" />
+          <NavigationProperty Name="tbOpciones" Relationship="Self.FK_tbOpcionesPerfil_tbOpciones" FromRole="tbOpcionesPerfil" ToRole="tbOpciones" />
+          <NavigationProperty Name="tbPerfiles" Relationship="Self.FK_tbOpcionesPerfil_tbPerfiles" FromRole="tbOpcionesPerfil" ToRole="tbPerfiles" />
         </EntityType>
         <EntityType Name="tbPerfiles">
           <Key>
             <PropertyRef Name="CodPerfil" />
           </Key>
           <Property Name="CodPerfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodAplicacion" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tbAplicaciones" Relationship="bdSecurityModel.FK_tbPerfiles_tbAplicaciones" FromRole="tbPerfiles" ToRole="tbAplicaciones" />
-          <NavigationProperty Name="tbPerfilesUsuario" Relationship="bdSecurityModel.FK_tbPerfilesUsuario_tbPerfiles" FromRole="tbPerfiles" ToRole="tbPerfilesUsuario" />
+          <NavigationProperty Name="tbAplicaciones" Relationship="Self.FK_tbPerfiles_tbAplicaciones" FromRole="tbPerfiles" ToRole="tbAplicaciones" />
+          <NavigationProperty Name="tbOpcionesPerfil" Relationship="Self.FK_tbOpcionesPerfil_tbPerfiles" FromRole="tbPerfiles" ToRole="tbOpcionesPerfil" />
+          <NavigationProperty Name="tbPerfilesUsuario" Relationship="Self.FK_tbPerfilesUsuario_tbPerfiles" FromRole="tbPerfiles" ToRole="tbPerfilesUsuario" />
         </EntityType>
         <EntityType Name="tbPerfilesUsuario">
           <Key>
@@ -321,18 +1059,66 @@
           <Property Name="CodPerfil" Type="Int32" Nullable="false" />
           <Property Name="CodUsuario" Type="Int32" Nullable="false" />
           <Property Name="CodAplicacion" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tbPerfiles" Relationship="bdSecurityModel.FK_tbPerfilesUsuario_tbPerfiles" FromRole="tbPerfilesUsuario" ToRole="tbPerfiles" />
+          <NavigationProperty Name="tbPerfiles" Relationship="Self.FK_tbPerfilesUsuario_tbPerfiles" FromRole="tbPerfilesUsuario" ToRole="tbPerfiles" />
+        </EntityType>
+        <EntityType Name="tbProyectos">
+          <Key>
+            <PropertyRef Name="CodProyecto" />
+          </Key>
+          <Property Name="CodProyecto" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombreInt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UbicacionDe" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UbicacionPro" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbDocumentos" Relationship="Self.FK_tbDocumentos_tbProyectos" FromRole="tbProyectos" ToRole="tbDocumentos" />
+          <NavigationProperty Name="tbAplicaciones" Relationship="Self.tbAplicacionesProyecto" FromRole="tbProyectos" ToRole="tbAplicaciones" />
+        </EntityType>
+        <EntityType Name="tbSiteMap">
+          <Key>
+            <PropertyRef Name="CodSiteMap" />
+          </Key>
+          <Property Name="CodSiteMap" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="Parent" Type="Int32" />
+          <Property Name="CodOpcion" Type="Int32" />
+          <Property Name="CodAplicacion" Type="Int32" />
+          <NavigationProperty Name="tbOpciones" Relationship="Self.FK_tbSiteMap_tbOpciones" FromRole="tbSiteMap" ToRole="tbOpciones" />
+        </EntityType>
+        <EntityType Name="tbTipoDocumentos">
+          <Key>
+            <PropertyRef Name="CodTipoDocumento" />
+          </Key>
+          <Property Name="CodTipoDocumento" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbDocumentos" Relationship="Self.FK_tbDocumentos_tbTipoDocumentos" FromRole="tbTipoDocumentos" ToRole="tbDocumentos" />
+        </EntityType>
+        <EntityType Name="tbTiposAplicacion">
+          <Key>
+            <PropertyRef Name="CodTipoAplicacion" />
+          </Key>
+          <Property Name="CodTipoAplicacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbAplicaciones" Relationship="Self.FK_tbAplicaciones_tbTiposAplicacion" FromRole="tbTiposAplicacion" ToRole="tbAplicaciones" />
+        </EntityType>
+        <EntityType Name="tbTiposCompania">
+          <Key>
+            <PropertyRef Name="CodTipoCompania" />
+          </Key>
+          <Property Name="CodTipoCompania" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomTipoCompania" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="tbUsuarios">
           <Key>
             <PropertyRef Name="CodUsuario" />
           </Key>
           <Property Name="CodUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Cedula" Type="String" Nullable="false" MaxLength="16" Unicode="false" FixedLength="false" />
-          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="TelCasa" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="DirCasa" Type="String" MaxLength="120" Unicode="false" FixedLength="false" />
+          <Property Name="Cedula" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TelCasa" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DirCasa" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Name="GrupoSanguineo" Type="Int32" />
           <Property Name="CodCargo" Type="Int32" Nullable="false" />
           <Property Name="CodArea" Type="Int32" Nullable="false" />
@@ -340,38 +1126,139 @@
           <Property Name="FechaNacimiento" Type="DateTime" Precision="3" />
           <Property Name="FechaIngreso" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CodTipoContrato" Type="Int32" Nullable="false" />
-          <Property Name="EMail" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
-          <Property Name="Celular" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="CodEstado" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
-          <Property Name="userNT" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="EMail" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CodEstado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="userNT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="IsLockedOut" Type="Boolean" Nullable="false" />
           <Property Name="LastLockedOutDate" Type="DateTime" Precision="0" />
           <Property Name="FailedPasswordAttemptCount" Type="Int32" />
           <Property Name="FailedPasswordAttemptWindowStart" Type="DateTime" Precision="0" />
-          <Property Name="PasswordQuestion" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
-          <Property Name="PasswordAnswer" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PasswordQuestion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordAnswer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FailedPasswordAnswerAttemptCount" Type="Int32" />
           <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="DateTime" Precision="3" />
           <Property Name="CodCompania" Type="Int32" />
           <Property Name="Foto" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="idUsuarioIBS" Type="Int32" />
-          <NavigationProperty Name="tbAplicacionesUsuario" Relationship="bdSecurityModel.FK_tbAplicacionesUsuario_tbUsuarios" FromRole="tbUsuarios" ToRole="tbAplicacionesUsuario" />
+          <NavigationProperty Name="tbAplicacionesUsuario" Relationship="Self.FK_tbAplicacionesUsuario_tbUsuarios" FromRole="tbUsuarios" ToRole="tbAplicacionesUsuario" />
         </EntityType>
-        <Association Name="FK_tbAplicacionesProyecto_tbAplicaciones">
-          <End Role="tbAplicaciones" Type="bdSecurityModel.tbAplicaciones" Multiplicity="1" />
-          <End Role="tbAplicacionesProyecto" Type="bdSecurityModel.tbAplicacionesProyecto" Multiplicity="*" />
+        <EntityType Name="scConsultaMasiva_Detalle">
+          <Key>
+            <PropertyRef Name="idcmDetalle" />
+          </Key>
+          <Property Name="idcmDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idconsulta" Type="Int32" />
+          <Property Name="tipodoc" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="numerodocumento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="departamento" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="idusuario" Type="Int32" />
+          <Property Name="producto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="numdecos" Type="Int32" />
+          <Property Name="provincia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="distrito" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="score" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="bancarizado" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="error" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="mensaje" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="scConsultaMasiva" Relationship="Self.FK__scConsult__idcon__0268428D" FromRole="scConsultaMasiva_Detalle" ToRole="scConsultaMasiva" />
+        </EntityType>
+        <EntityType Name="T1">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="apellido" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbAmbientesAplicacion">
+          <Key>
+            <PropertyRef Name="CodAmbiente" />
+            <PropertyRef Name="CodAplicacion" />
+            <PropertyRef Name="FuenteDatos" />
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="CodAmbiente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodAplicacion" Type="Int32" Nullable="false" />
+          <Property Name="NomAmbiente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Proveedor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FuenteDatos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NomBaseDatos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbDominioUnix">
+          <Key>
+            <PropertyRef Name="IdMaquina" />
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="IdMaquina" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="userid" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="prmygroup" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="home" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="shell" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbDominioWindows">
+          <Key>
+            <PropertyRef Name="Login" />
+          </Key>
+          <Property Name="Login" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="AccountType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="HomeDrive" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="HomeDir" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Profile" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LogonScript" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Workstations" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PswdCanBeChanged" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PswdLastSetTime" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PswdRequired" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PswdExpires" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PswdExpiresTime" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="AcctDisabled" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="AcctLockedOut" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="AcctExpiresTime" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LastLogonTime" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LastLogonServer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LogonHours" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Sid" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RasDialin" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RasCallback" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RasCallbackNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__scConsult__idcon__0268428D">
+          <End Role="scConsultaMasiva" Type="Self.scConsultaMasiva" Multiplicity="0..1" />
+          <End Role="scConsultaMasiva_Detalle" Type="Self.scConsultaMasiva_Detalle" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tbAplicaciones">
-              <PropertyRef Name="CodAplicacion" />
+            <Principal Role="scConsultaMasiva">
+              <PropertyRef Name="idconsulta" />
             </Principal>
-            <Dependent Role="tbAplicacionesProyecto">
-              <PropertyRef Name="CodAplicacion" />
+            <Dependent Role="scConsultaMasiva_Detalle">
+              <PropertyRef Name="idconsulta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbAplicaciones_tbTiposAplicacion">
+          <End Role="tbTiposAplicacion" Type="Self.tbTiposAplicacion" Multiplicity="1" />
+          <End Role="tbAplicaciones" Type="Self.tbAplicaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTiposAplicacion">
+              <PropertyRef Name="CodTipoAplicacion" />
+            </Principal>
+            <Dependent Role="tbAplicaciones">
+              <PropertyRef Name="CodTipoAplicacion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbAplicacionesUsuario_tbAplicaciones">
-          <End Role="tbAplicaciones" Type="bdSecurityModel.tbAplicaciones" Multiplicity="1" />
-          <End Role="tbAplicacionesUsuario" Type="bdSecurityModel.tbAplicacionesUsuario" Multiplicity="*" />
+          <End Role="tbAplicaciones" Type="Self.tbAplicaciones" Multiplicity="1" />
+          <End Role="tbAplicacionesUsuario" Type="Self.tbAplicacionesUsuario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbAplicaciones">
               <PropertyRef Name="CodAplicacion" />
@@ -381,9 +1268,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tbOpciones_tbAplicaciones">
+          <End Role="tbAplicaciones" Type="Self.tbAplicaciones" Multiplicity="0..1" />
+          <End Role="tbOpciones" Type="Self.tbOpciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbAplicaciones">
+              <PropertyRef Name="CodAplicacion" />
+            </Principal>
+            <Dependent Role="tbOpciones">
+              <PropertyRef Name="CodAplicacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbPerfiles_tbAplicaciones">
-          <End Role="tbAplicaciones" Type="bdSecurityModel.tbAplicaciones" Multiplicity="1" />
-          <End Role="tbPerfiles" Type="bdSecurityModel.tbPerfiles" Multiplicity="*" />
+          <End Role="tbAplicaciones" Type="Self.tbAplicaciones" Multiplicity="1" />
+          <End Role="tbPerfiles" Type="Self.tbPerfiles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbAplicaciones">
               <PropertyRef Name="CodAplicacion" />
@@ -394,8 +1293,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbAplicacionesUsuario_tbUsuarios">
-          <End Role="tbUsuarios" Type="bdSecurityModel.tbUsuarios" Multiplicity="1" />
-          <End Role="tbAplicacionesUsuario" Type="bdSecurityModel.tbAplicacionesUsuario" Multiplicity="*" />
+          <End Role="tbUsuarios" Type="Self.tbUsuarios" Multiplicity="1" />
+          <End Role="tbAplicacionesUsuario" Type="Self.tbAplicacionesUsuario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbUsuarios">
               <PropertyRef Name="CodUsuario" />
@@ -406,8 +1305,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbAreas_tbAreas">
-          <End Role="tbAreas" Type="bdSecurityModel.tbAreas" Multiplicity="0..1" />
-          <End Role="tbAreas1" Type="bdSecurityModel.tbAreas" Multiplicity="*" />
+          <End Role="tbAreas" Type="Self.tbAreas" Multiplicity="0..1" />
+          <End Role="tbAreas1" Type="Self.tbAreas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbAreas">
               <PropertyRef Name="CodArea" />
@@ -417,9 +1316,93 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tbCargos_tbAreas">
+          <End Role="tbAreas" Type="Self.tbAreas" Multiplicity="0..1" />
+          <End Role="tbCargos" Type="Self.tbCargos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbAreas">
+              <PropertyRef Name="CodArea" />
+            </Principal>
+            <Dependent Role="tbCargos">
+              <PropertyRef Name="CodArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbDetAuditoria_tbAuditoria">
+          <End Role="tbAuditorias" Type="Self.tbAuditorias" Multiplicity="1" />
+          <End Role="tbDetallesAuditoria" Type="Self.tbDetallesAuditoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbAuditorias">
+              <PropertyRef Name="CodAuditoria" />
+            </Principal>
+            <Dependent Role="tbDetallesAuditoria">
+              <PropertyRef Name="CodAuditoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbDocumentos_tbProyectos">
+          <End Role="tbProyectos" Type="Self.tbProyectos" Multiplicity="1" />
+          <End Role="tbDocumentos" Type="Self.tbDocumentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbProyectos">
+              <PropertyRef Name="CodProyecto" />
+            </Principal>
+            <Dependent Role="tbDocumentos">
+              <PropertyRef Name="CodProyecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbDocumentos_tbTipoDocumentos">
+          <End Role="tbTipoDocumentos" Type="Self.tbTipoDocumentos" Multiplicity="1" />
+          <End Role="tbDocumentos" Type="Self.tbDocumentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbTipoDocumentos">
+              <PropertyRef Name="CodTipoDocumento" />
+            </Principal>
+            <Dependent Role="tbDocumentos">
+              <PropertyRef Name="CodTipoDoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbOpcionesPerfil_tbOpciones">
+          <End Role="tbOpciones" Type="Self.tbOpciones" Multiplicity="1" />
+          <End Role="tbOpcionesPerfil" Type="Self.tbOpcionesPerfil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbOpciones">
+              <PropertyRef Name="CodOpcion" />
+            </Principal>
+            <Dependent Role="tbOpcionesPerfil">
+              <PropertyRef Name="CodOpcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbSiteMap_tbOpciones">
+          <End Role="tbOpciones" Type="Self.tbOpciones" Multiplicity="0..1" />
+          <End Role="tbSiteMap" Type="Self.tbSiteMap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbOpciones">
+              <PropertyRef Name="CodOpcion" />
+            </Principal>
+            <Dependent Role="tbSiteMap">
+              <PropertyRef Name="CodOpcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbOpcionesPerfil_tbPerfiles">
+          <End Role="tbPerfiles" Type="Self.tbPerfiles" Multiplicity="1" />
+          <End Role="tbOpcionesPerfil" Type="Self.tbOpcionesPerfil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbPerfiles">
+              <PropertyRef Name="CodPerfil" />
+            </Principal>
+            <Dependent Role="tbOpcionesPerfil">
+              <PropertyRef Name="CodPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbPerfilesUsuario_tbPerfiles">
-          <End Role="tbPerfiles" Type="bdSecurityModel.tbPerfiles" Multiplicity="1" />
-          <End Role="tbPerfilesUsuario" Type="bdSecurityModel.tbPerfilesUsuario" Multiplicity="*" />
+          <End Role="tbPerfiles" Type="Self.tbPerfiles" Multiplicity="1" />
+          <End Role="tbPerfilesUsuario" Type="Self.tbPerfilesUsuario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbPerfiles">
               <PropertyRef Name="CodPerfil" />
@@ -429,14 +1412,174 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="tbAplicacionesProyecto">
+          <End Role="tbAplicaciones" Type="Self.tbAplicaciones" Multiplicity="*" />
+          <End Role="tbProyectos" Type="Self.tbProyectos" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="bdSecurityEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="dtproperties" EntityType="Self.dtproperties" />
+          <EntitySet Name="scConsultaMasiva" EntityType="Self.scConsultaMasiva" />
+          <EntitySet Name="scParametroConfig" EntityType="Self.scParametroConfig" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tbAccesoIBS" EntityType="Self.tbAccesoIBS" />
+          <EntitySet Name="tbAplicaciones" EntityType="Self.tbAplicaciones" />
+          <EntitySet Name="tbAplicacionesUsuario" EntityType="Self.tbAplicacionesUsuario" />
+          <EntitySet Name="tbAreas" EntityType="Self.tbAreas" />
+          <EntitySet Name="tbAuditorias" EntityType="Self.tbAuditorias" />
+          <EntitySet Name="tbCargos" EntityType="Self.tbCargos" />
+          <EntitySet Name="tbCompanias" EntityType="Self.tbCompanias" />
+          <EntitySet Name="tbDetallesAuditoria" EntityType="Self.tbDetallesAuditoria" />
+          <EntitySet Name="tbDocumentos" EntityType="Self.tbDocumentos" />
+          <EntitySet Name="tbEstados" EntityType="Self.tbEstados" />
+          <EntitySet Name="tbLogAcceso" EntityType="Self.tbLogAcceso" />
+          <EntitySet Name="tbOpciones" EntityType="Self.tbOpciones" />
+          <EntitySet Name="tbOpcionesPerfil" EntityType="Self.tbOpcionesPerfil" />
+          <EntitySet Name="tbPerfiles" EntityType="Self.tbPerfiles" />
+          <EntitySet Name="tbPerfilesUsuario" EntityType="Self.tbPerfilesUsuario" />
+          <EntitySet Name="tbProyectos" EntityType="Self.tbProyectos" />
+          <EntitySet Name="tbSiteMap" EntityType="Self.tbSiteMap" />
+          <EntitySet Name="tbTipoDocumentos" EntityType="Self.tbTipoDocumentos" />
+          <EntitySet Name="tbTiposAplicacion" EntityType="Self.tbTiposAplicacion" />
+          <EntitySet Name="tbTiposCompania" EntityType="Self.tbTiposCompania" />
+          <EntitySet Name="tbUsuarios" EntityType="Self.tbUsuarios" />
+          <EntitySet Name="scConsultaMasiva_Detalle" EntityType="Self.scConsultaMasiva_Detalle" />
+          <EntitySet Name="T1" EntityType="Self.T1" />
+          <EntitySet Name="tbAmbientesAplicacion" EntityType="Self.tbAmbientesAplicacion" />
+          <EntitySet Name="tbDominioUnix" EntityType="Self.tbDominioUnix" />
+          <EntitySet Name="tbDominioWindows" EntityType="Self.tbDominioWindows" />
+          <AssociationSet Name="FK__scConsult__idcon__0268428D" Association="Self.FK__scConsult__idcon__0268428D">
+            <End Role="scConsultaMasiva" EntitySet="scConsultaMasiva" />
+            <End Role="scConsultaMasiva_Detalle" EntitySet="scConsultaMasiva_Detalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbAplicaciones_tbTiposAplicacion" Association="Self.FK_tbAplicaciones_tbTiposAplicacion">
+            <End Role="tbTiposAplicacion" EntitySet="tbTiposAplicacion" />
+            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbAplicacionesUsuario_tbAplicaciones" Association="Self.FK_tbAplicacionesUsuario_tbAplicaciones">
+            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
+            <End Role="tbAplicacionesUsuario" EntitySet="tbAplicacionesUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbOpciones_tbAplicaciones" Association="Self.FK_tbOpciones_tbAplicaciones">
+            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
+            <End Role="tbOpciones" EntitySet="tbOpciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbPerfiles_tbAplicaciones" Association="Self.FK_tbPerfiles_tbAplicaciones">
+            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
+            <End Role="tbPerfiles" EntitySet="tbPerfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbAplicacionesUsuario_tbUsuarios" Association="Self.FK_tbAplicacionesUsuario_tbUsuarios">
+            <End Role="tbUsuarios" EntitySet="tbUsuarios" />
+            <End Role="tbAplicacionesUsuario" EntitySet="tbAplicacionesUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbAreas_tbAreas" Association="Self.FK_tbAreas_tbAreas">
+            <End Role="tbAreas" EntitySet="tbAreas" />
+            <End Role="tbAreas1" EntitySet="tbAreas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbCargos_tbAreas" Association="Self.FK_tbCargos_tbAreas">
+            <End Role="tbAreas" EntitySet="tbAreas" />
+            <End Role="tbCargos" EntitySet="tbCargos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbDetAuditoria_tbAuditoria" Association="Self.FK_tbDetAuditoria_tbAuditoria">
+            <End Role="tbAuditorias" EntitySet="tbAuditorias" />
+            <End Role="tbDetallesAuditoria" EntitySet="tbDetallesAuditoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbDocumentos_tbProyectos" Association="Self.FK_tbDocumentos_tbProyectos">
+            <End Role="tbProyectos" EntitySet="tbProyectos" />
+            <End Role="tbDocumentos" EntitySet="tbDocumentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbDocumentos_tbTipoDocumentos" Association="Self.FK_tbDocumentos_tbTipoDocumentos">
+            <End Role="tbTipoDocumentos" EntitySet="tbTipoDocumentos" />
+            <End Role="tbDocumentos" EntitySet="tbDocumentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbOpcionesPerfil_tbOpciones" Association="Self.FK_tbOpcionesPerfil_tbOpciones">
+            <End Role="tbOpciones" EntitySet="tbOpciones" />
+            <End Role="tbOpcionesPerfil" EntitySet="tbOpcionesPerfil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbSiteMap_tbOpciones" Association="Self.FK_tbSiteMap_tbOpciones">
+            <End Role="tbOpciones" EntitySet="tbOpciones" />
+            <End Role="tbSiteMap" EntitySet="tbSiteMap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbOpcionesPerfil_tbPerfiles" Association="Self.FK_tbOpcionesPerfil_tbPerfiles">
+            <End Role="tbPerfiles" EntitySet="tbPerfiles" />
+            <End Role="tbOpcionesPerfil" EntitySet="tbOpcionesPerfil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbPerfilesUsuario_tbPerfiles" Association="Self.FK_tbPerfilesUsuario_tbPerfiles">
+            <End Role="tbPerfiles" EntitySet="tbPerfiles" />
+            <End Role="tbPerfilesUsuario" EntitySet="tbPerfilesUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="tbAplicacionesProyecto" Association="Self.tbAplicacionesProyecto">
+            <End Role="tbAplicaciones" EntitySet="tbAplicaciones" />
+            <End Role="tbProyectos" EntitySet="tbProyectos" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="bdSecurityModelStoreContainer" CdmEntityContainer="bdSecurityEntities">
+        <EntityContainerMapping StorageEntityContainer="BdSecurityStoreContainer" CdmEntityContainer="bdSecurityEntities">
+          <EntitySetMapping Name="dtproperties">
+            <EntityTypeMapping TypeName="BdSecurity.dtproperties">
+              <MappingFragment StoreEntitySet="dtproperties">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="objectid" ColumnName="objectid" />
+                <ScalarProperty Name="property" ColumnName="property" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="uvalue" ColumnName="uvalue" />
+                <ScalarProperty Name="lvalue" ColumnName="lvalue" />
+                <ScalarProperty Name="version" ColumnName="version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scConsultaMasiva">
+            <EntityTypeMapping TypeName="BdSecurity.scConsultaMasiva">
+              <MappingFragment StoreEntitySet="scConsultaMasiva">
+                <ScalarProperty Name="idconsulta" ColumnName="idconsulta" />
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="fechaInicia" ColumnName="fechaInicia" />
+                <ScalarProperty Name="fechaFin" ColumnName="fechaFin" />
+                <ScalarProperty Name="rutafile" ColumnName="rutafile" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="mensaje" ColumnName="mensaje" />
+                <ScalarProperty Name="rutaOrigen" ColumnName="rutaOrigen" />
+                <ScalarProperty Name="idUsuarioEnvio" ColumnName="idUsuarioEnvio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scParametroConfig">
+            <EntityTypeMapping TypeName="BdSecurity.scParametroConfig">
+              <MappingFragment StoreEntitySet="scParametroConfig">
+                <ScalarProperty Name="idparametro" ColumnName="idparametro" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="valor" ColumnName="valor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BdSecurity.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbAccesoIBS">
+            <EntityTypeMapping TypeName="BdSecurity.tbAccesoIBS">
+              <MappingFragment StoreEntitySet="tbAccesoIBS">
+                <ScalarProperty Name="CodUsuario" ColumnName="CodUsuario" />
+                <ScalarProperty Name="loginIBS" ColumnName="loginIBS" />
+                <ScalarProperty Name="passwordIBS" ColumnName="passwordIBS" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+                <ScalarProperty Name="fechaActualizacion" ColumnName="fechaActualizacion" />
+                <ScalarProperty Name="idUsuarioIBS" ColumnName="idUsuarioIBS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbAplicaciones">
-            <EntityTypeMapping TypeName="bdSecurityModel.tbAplicaciones">
+            <EntityTypeMapping TypeName="BdSecurity.tbAplicaciones">
               <MappingFragment StoreEntitySet="tbAplicaciones">
                 <ScalarProperty Name="CodAplicacion" ColumnName="CodAplicacion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -446,16 +1589,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbAplicacionesProyecto">
-            <EntityTypeMapping TypeName="bdSecurityModel.tbAplicacionesProyecto">
-              <MappingFragment StoreEntitySet="tbAplicacionesProyecto">
-                <ScalarProperty Name="CodProyecto" ColumnName="CodProyecto" />
-                <ScalarProperty Name="CodAplicacion" ColumnName="CodAplicacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbAplicacionesUsuario">
-            <EntityTypeMapping TypeName="bdSecurityModel.tbAplicacionesUsuario">
+            <EntityTypeMapping TypeName="BdSecurity.tbAplicacionesUsuario">
               <MappingFragment StoreEntitySet="tbAplicacionesUsuario">
                 <ScalarProperty Name="CodUsuario" ColumnName="CodUsuario" />
                 <ScalarProperty Name="CodAplicacion" ColumnName="CodAplicacion" />
@@ -465,7 +1600,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbAreas">
-            <EntityTypeMapping TypeName="bdSecurityModel.tbAreas">
+            <EntityTypeMapping TypeName="BdSecurity.tbAreas">
               <MappingFragment StoreEntitySet="tbAreas">
                 <ScalarProperty Name="CodArea" ColumnName="CodArea" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -475,16 +1610,129 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbAuditorias">
+            <EntityTypeMapping TypeName="BdSecurity.tbAuditorias">
+              <MappingFragment StoreEntitySet="tbAuditorias">
+                <ScalarProperty Name="CodAuditoria" ColumnName="CodAuditoria" />
+                <ScalarProperty Name="CodUsuario" ColumnName="CodUsuario" />
+                <ScalarProperty Name="CodAplicacion" ColumnName="CodAplicacion" />
+                <ScalarProperty Name="CodPerfil" ColumnName="CodPerfil" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="EstacionUsuario" ColumnName="EstacionUsuario" />
+                <ScalarProperty Name="FechaHoraInicio" ColumnName="FechaHoraInicio" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbCargos">
+            <EntityTypeMapping TypeName="BdSecurity.tbCargos">
+              <MappingFragment StoreEntitySet="tbCargos">
+                <ScalarProperty Name="CodCargo" ColumnName="CodCargo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CodArea" ColumnName="CodArea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbCompanias">
+            <EntityTypeMapping TypeName="BdSecurity.tbCompanias">
+              <MappingFragment StoreEntitySet="tbCompanias">
+                <ScalarProperty Name="CodCompania" ColumnName="CodCompania" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="NumDocumento" ColumnName="NumDocumento" />
+                <ScalarProperty Name="CodTipoDocumento" ColumnName="CodTipoDocumento" />
+                <ScalarProperty Name="CodTipoCompania" ColumnName="CodTipoCompania" />
+                <ScalarProperty Name="NomRepresentante" ColumnName="NomRepresentante" />
+                <ScalarProperty Name="ApeRepresentante" ColumnName="ApeRepresentante" />
+                <ScalarProperty Name="NumDocRepresentante" ColumnName="NumDocRepresentante" />
+                <ScalarProperty Name="CodTipoDocRepresentante" ColumnName="CodTipoDocRepresentante" />
+                <ScalarProperty Name="FechaVinculacion" ColumnName="FechaVinculacion" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="UsuarioCreacion" ColumnName="UsuarioCreacion" />
+                <ScalarProperty Name="FechaUltModificacion" ColumnName="FechaUltModificacion" />
+                <ScalarProperty Name="UsuarioUltModificacion" ColumnName="UsuarioUltModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbDetallesAuditoria">
+            <EntityTypeMapping TypeName="BdSecurity.tbDetallesAuditoria">
+              <MappingFragment StoreEntitySet="tbDetallesAuditoria">
+                <ScalarProperty Name="CodAuditoria" ColumnName="CodAuditoria" />
+                <ScalarProperty Name="CodDetAuditoria" ColumnName="CodDetAuditoria" />
+                <ScalarProperty Name="FechaHoraAccion" ColumnName="FechaHoraAccion" />
+                <ScalarProperty Name="CodOperacion" ColumnName="CodOperacion" />
+                <ScalarProperty Name="DescripcionSQL" ColumnName="DescripcionSQL" />
+                <ScalarProperty Name="CantRegistrosAfectados" ColumnName="CantRegistrosAfectados" />
+                <ScalarProperty Name="ObjetoEfecto" ColumnName="ObjetoEfecto" />
+                <ScalarProperty Name="ObjetoCausa" ColumnName="ObjetoCausa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbDocumentos">
+            <EntityTypeMapping TypeName="BdSecurity.tbDocumentos">
+              <MappingFragment StoreEntitySet="tbDocumentos">
+                <ScalarProperty Name="CodDocumento" ColumnName="CodDocumento" />
+                <ScalarProperty Name="Ubicación" ColumnName="Ubicación" />
+                <ScalarProperty Name="CodArea" ColumnName="CodArea" />
+                <ScalarProperty Name="CodTipoDoc" ColumnName="CodTipoDoc" />
+                <ScalarProperty Name="CodProyecto" ColumnName="CodProyecto" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbEstados">
-            <EntityTypeMapping TypeName="bdSecurityModel.tbEstados">
+            <EntityTypeMapping TypeName="BdSecurity.tbEstados">
               <MappingFragment StoreEntitySet="tbEstados">
                 <ScalarProperty Name="CodEstado" ColumnName="CodEstado" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbLogAcceso">
+            <EntityTypeMapping TypeName="BdSecurity.tbLogAcceso">
+              <MappingFragment StoreEntitySet="tbLogAcceso">
+                <ScalarProperty Name="idlog" ColumnName="idlog" />
+                <ScalarProperty Name="codusuario" ColumnName="codusuario" />
+                <ScalarProperty Name="fecregistro" ColumnName="fecregistro" />
+                <ScalarProperty Name="codaplicacion" ColumnName="codaplicacion" />
+                <ScalarProperty Name="tipolog" ColumnName="tipolog" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbOpciones">
+            <EntityTypeMapping TypeName="BdSecurity.tbOpciones">
+              <MappingFragment StoreEntitySet="tbOpciones">
+                <ScalarProperty Name="CodOpcion" ColumnName="CodOpcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CodAplicacion" ColumnName="CodAplicacion" />
+                <ScalarProperty Name="CodOpcionPadre" ColumnName="CodOpcionPadre" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="icono" ColumnName="icono" />
+                <ScalarProperty Name="jsfunction" ColumnName="jsfunction" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbOpcionesPerfil">
+            <EntityTypeMapping TypeName="BdSecurity.tbOpcionesPerfil">
+              <MappingFragment StoreEntitySet="tbOpcionesPerfil">
+                <ScalarProperty Name="CodPerfil" ColumnName="CodPerfil" />
+                <ScalarProperty Name="CodOpcion" ColumnName="CodOpcion" />
+                <ScalarProperty Name="PermisoCreacion" ColumnName="PermisoCreacion" />
+                <ScalarProperty Name="PermisoConsulta" ColumnName="PermisoConsulta" />
+                <ScalarProperty Name="PermisoActualizacion" ColumnName="PermisoActualizacion" />
+                <ScalarProperty Name="PermisoBorrado" ColumnName="PermisoBorrado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbPerfiles">
-            <EntityTypeMapping TypeName="bdSecurityModel.tbPerfiles">
+            <EntityTypeMapping TypeName="BdSecurity.tbPerfiles">
               <MappingFragment StoreEntitySet="tbPerfiles">
                 <ScalarProperty Name="CodPerfil" ColumnName="CodPerfil" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -493,7 +1741,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbPerfilesUsuario">
-            <EntityTypeMapping TypeName="bdSecurityModel.tbPerfilesUsuario">
+            <EntityTypeMapping TypeName="BdSecurity.tbPerfilesUsuario">
               <MappingFragment StoreEntitySet="tbPerfilesUsuario">
                 <ScalarProperty Name="CodPerfil" ColumnName="CodPerfil" />
                 <ScalarProperty Name="CodUsuario" ColumnName="CodUsuario" />
@@ -501,8 +1749,56 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tbProyectos">
+            <EntityTypeMapping TypeName="BdSecurity.tbProyectos">
+              <MappingFragment StoreEntitySet="tbProyectos">
+                <ScalarProperty Name="CodProyecto" ColumnName="CodProyecto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NombreInt" ColumnName="NombreInt" />
+                <ScalarProperty Name="UbicacionDe" ColumnName="UbicacionDe" />
+                <ScalarProperty Name="UbicacionPro" ColumnName="UbicacionPro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbSiteMap">
+            <EntityTypeMapping TypeName="BdSecurity.tbSiteMap">
+              <MappingFragment StoreEntitySet="tbSiteMap">
+                <ScalarProperty Name="CodSiteMap" ColumnName="CodSiteMap" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Parent" ColumnName="Parent" />
+                <ScalarProperty Name="CodOpcion" ColumnName="CodOpcion" />
+                <ScalarProperty Name="CodAplicacion" ColumnName="CodAplicacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbTipoDocumentos">
+            <EntityTypeMapping TypeName="BdSecurity.tbTipoDocumentos">
+              <MappingFragment StoreEntitySet="tbTipoDocumentos">
+                <ScalarProperty Name="CodTipoDocumento" ColumnName="CodTipoDocumento" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbTiposAplicacion">
+            <EntityTypeMapping TypeName="BdSecurity.tbTiposAplicacion">
+              <MappingFragment StoreEntitySet="tbTiposAplicacion">
+                <ScalarProperty Name="CodTipoAplicacion" ColumnName="CodTipoAplicacion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbTiposCompania">
+            <EntityTypeMapping TypeName="BdSecurity.tbTiposCompania">
+              <MappingFragment StoreEntitySet="tbTiposCompania">
+                <ScalarProperty Name="CodTipoCompania" ColumnName="CodTipoCompania" />
+                <ScalarProperty Name="NomTipoCompania" ColumnName="NomTipoCompania" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tbUsuarios">
-            <EntityTypeMapping TypeName="bdSecurityModel.tbUsuarios">
+            <EntityTypeMapping TypeName="BdSecurity.tbUsuarios">
               <MappingFragment StoreEntitySet="tbUsuarios">
                 <ScalarProperty Name="CodUsuario" ColumnName="CodUsuario" />
                 <ScalarProperty Name="Cedula" ColumnName="Cedula" />
@@ -535,6 +1831,103 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="scConsultaMasiva_Detalle">
+            <EntityTypeMapping TypeName="BdSecurity.scConsultaMasiva_Detalle">
+              <MappingFragment StoreEntitySet="scConsultaMasiva_Detalle">
+                <ScalarProperty Name="idcmDetalle" ColumnName="idcmDetalle" />
+                <ScalarProperty Name="idconsulta" ColumnName="idconsulta" />
+                <ScalarProperty Name="tipodoc" ColumnName="tipodoc" />
+                <ScalarProperty Name="numerodocumento" ColumnName="numerodocumento" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="departamento" ColumnName="departamento" />
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="producto" ColumnName="producto" />
+                <ScalarProperty Name="numdecos" ColumnName="numdecos" />
+                <ScalarProperty Name="provincia" ColumnName="provincia" />
+                <ScalarProperty Name="distrito" ColumnName="distrito" />
+                <ScalarProperty Name="score" ColumnName="score" />
+                <ScalarProperty Name="bancarizado" ColumnName="bancarizado" />
+                <ScalarProperty Name="error" ColumnName="error" />
+                <ScalarProperty Name="mensaje" ColumnName="mensaje" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T1">
+            <EntityTypeMapping TypeName="BdSecurity.T1">
+              <MappingFragment StoreEntitySet="T1">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbAmbientesAplicacion">
+            <EntityTypeMapping TypeName="BdSecurity.tbAmbientesAplicacion">
+              <MappingFragment StoreEntitySet="tbAmbientesAplicacion">
+                <ScalarProperty Name="CodAmbiente" ColumnName="CodAmbiente" />
+                <ScalarProperty Name="CodAplicacion" ColumnName="CodAplicacion" />
+                <ScalarProperty Name="NomAmbiente" ColumnName="NomAmbiente" />
+                <ScalarProperty Name="Proveedor" ColumnName="Proveedor" />
+                <ScalarProperty Name="FuenteDatos" ColumnName="FuenteDatos" />
+                <ScalarProperty Name="NomBaseDatos" ColumnName="NomBaseDatos" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbDominioUnix">
+            <EntityTypeMapping TypeName="BdSecurity.tbDominioUnix">
+              <MappingFragment StoreEntitySet="tbDominioUnix">
+                <ScalarProperty Name="IdMaquina" ColumnName="IdMaquina" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="prmygroup" ColumnName="prmygroup" />
+                <ScalarProperty Name="home" ColumnName="home" />
+                <ScalarProperty Name="shell" ColumnName="shell" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbDominioWindows">
+            <EntityTypeMapping TypeName="BdSecurity.tbDominioWindows">
+              <MappingFragment StoreEntitySet="tbDominioWindows">
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="HomeDrive" ColumnName="HomeDrive" />
+                <ScalarProperty Name="HomeDir" ColumnName="HomeDir" />
+                <ScalarProperty Name="Profile" ColumnName="Profile" />
+                <ScalarProperty Name="LogonScript" ColumnName="LogonScript" />
+                <ScalarProperty Name="Workstations" ColumnName="Workstations" />
+                <ScalarProperty Name="PswdCanBeChanged" ColumnName="PswdCanBeChanged" />
+                <ScalarProperty Name="PswdLastSetTime" ColumnName="PswdLastSetTime" />
+                <ScalarProperty Name="PswdRequired" ColumnName="PswdRequired" />
+                <ScalarProperty Name="PswdExpires" ColumnName="PswdExpires" />
+                <ScalarProperty Name="PswdExpiresTime" ColumnName="PswdExpiresTime" />
+                <ScalarProperty Name="AcctDisabled" ColumnName="AcctDisabled" />
+                <ScalarProperty Name="AcctLockedOut" ColumnName="AcctLockedOut" />
+                <ScalarProperty Name="AcctExpiresTime" ColumnName="AcctExpiresTime" />
+                <ScalarProperty Name="LastLogonTime" ColumnName="LastLogonTime" />
+                <ScalarProperty Name="LastLogonServer" ColumnName="LastLogonServer" />
+                <ScalarProperty Name="LogonHours" ColumnName="LogonHours" />
+                <ScalarProperty Name="Sid" ColumnName="Sid" />
+                <ScalarProperty Name="RasDialin" ColumnName="RasDialin" />
+                <ScalarProperty Name="RasCallback" ColumnName="RasCallback" />
+                <ScalarProperty Name="RasCallbackNumber" ColumnName="RasCallbackNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="tbAplicacionesProyecto" TypeName="BdSecurity.tbAplicacionesProyecto" StoreEntitySet="tbAplicacionesProyecto">
+            <EndProperty Name="tbAplicaciones">
+              <ScalarProperty Name="CodAplicacion" ColumnName="CodAplicacion" />
+            </EndProperty>
+            <EndProperty Name="tbProyectos">
+              <ScalarProperty Name="CodProyecto" ColumnName="CodProyecto" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -549,8 +1942,9 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>

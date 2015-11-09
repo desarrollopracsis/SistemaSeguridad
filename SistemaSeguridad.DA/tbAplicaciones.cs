@@ -16,9 +16,10 @@ namespace SistemaSeguridad.DA
     {
         public tbAplicaciones()
         {
-            this.tbAplicacionesProyecto = new HashSet<tbAplicacionesProyecto>();
             this.tbAplicacionesUsuario = new HashSet<tbAplicacionesUsuario>();
+            this.tbOpciones = new HashSet<tbOpciones>();
             this.tbPerfiles = new HashSet<tbPerfiles>();
+            this.tbProyectos = new HashSet<tbProyectos>();
         }
     
         public int CodAplicacion { get; set; }
@@ -27,8 +28,10 @@ namespace SistemaSeguridad.DA
         public System.DateTime FechaImplementacion { get; set; }
         public int CodTipoAplicacion { get; set; }
     
-        public virtual ICollection<tbAplicacionesProyecto> tbAplicacionesProyecto { get; set; }
+        public virtual tbTiposAplicacion tbTiposAplicacion { get; set; }
         public virtual ICollection<tbAplicacionesUsuario> tbAplicacionesUsuario { get; set; }
+        public virtual ICollection<tbOpciones> tbOpciones { get; set; }
         public virtual ICollection<tbPerfiles> tbPerfiles { get; set; }
+        public virtual ICollection<tbProyectos> tbProyectos { get; set; }
     }
 }

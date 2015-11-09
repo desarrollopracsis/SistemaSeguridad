@@ -4,21 +4,53 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="df6cc36b68c548018854e169b11d8271" Name="Diagrama1">
-        <EntityTypeShape EntityType="bdSecurityModel.tbAplicaciones" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="bdSecurityModel.tbAplicacionesProyecto" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="bdSecurityModel.tbAplicacionesUsuario" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bdSecurityModel.tbAreas" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bdSecurityModel.tbEstados" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="bdSecurityModel.tbPerfiles" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="bdSecurityModel.tbPerfilesUsuario" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="bdSecurityModel.tbUsuarios" Width="1.5" PointX="3.75" PointY="11.5" IsExpanded="true" />
-        <AssociationConnector Association="bdSecurityModel.FK_tbAplicacionesProyecto_tbAplicaciones" ManuallyRouted="false" />
-        <AssociationConnector Association="bdSecurityModel.FK_tbAplicacionesUsuario_tbAplicaciones" ManuallyRouted="false" />
-        <AssociationConnector Association="bdSecurityModel.FK_tbPerfiles_tbAplicaciones" ManuallyRouted="false" />
-        <AssociationConnector Association="bdSecurityModel.FK_tbAplicacionesUsuario_tbUsuarios" ManuallyRouted="false" />
-        <AssociationConnector Association="bdSecurityModel.FK_tbAreas_tbAreas" ManuallyRouted="false" />
-        <AssociationConnector Association="bdSecurityModel.FK_tbPerfilesUsuario_tbPerfiles" ManuallyRouted="false" />
+      <Diagram DiagramId="7d888af0b4964917b45fecf4429dddbd" Name="Diagram1">
+        <EntityTypeShape EntityType="BdSecurity.dtproperties" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.scConsultaMasiva" Width="1.5" PointX="10.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.scParametroConfig" Width="1.5" PointX="2.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.sysdiagrams" Width="1.5" PointX="2.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbAccesoIBS" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbAplicaciones" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbAplicacionesUsuario" Width="1.5" PointX="8.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbAreas" Width="1.5" PointX="8.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbAuditorias" Width="1.5" PointX="12.75" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbCargos" Width="1.5" PointX="11" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbCompanias" Width="1.5" PointX="0.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbDetallesAuditoria" Width="1.5" PointX="15" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbDocumentos" Width="1.5" PointX="7.5" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbEstados" Width="1.5" PointX="2.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbLogAcceso" Width="1.5" PointX="4.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbOpciones" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbOpcionesPerfil" Width="1.5" PointX="10.5" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbPerfiles" Width="1.5" PointX="5.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbPerfilesUsuario" Width="1.5" PointX="7.5" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbProyectos" Width="1.5" PointX="5.25" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbSiteMap" Width="1.5" PointX="7.5" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbTipoDocumentos" Width="1.5" PointX="5.25" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbTiposAplicacion" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbTiposCompania" Width="1.5" PointX="13.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbUsuarios" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.scConsultaMasiva_Detalle" Width="1.5" PointX="13" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.T1" Width="1.5" PointX="9.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbAmbientesAplicacion" Width="1.5" PointX="11.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbDominioUnix" Width="1.5" PointX="13.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BdSecurity.tbDominioWindows" Width="1.5" PointX="15.75" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="BdSecurity.FK__scConsult__idcon__0268428D" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbAplicaciones_tbTiposAplicacion" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbAplicacionesUsuario_tbAplicaciones" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbOpciones_tbAplicaciones" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbPerfiles_tbAplicaciones" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbAplicacionesUsuario_tbUsuarios" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbAreas_tbAreas" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbCargos_tbAreas" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbDetAuditoria_tbAuditoria" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbDocumentos_tbProyectos" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbDocumentos_tbTipoDocumentos" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbOpcionesPerfil_tbOpciones" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbSiteMap_tbOpciones" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbOpcionesPerfil_tbPerfiles" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.FK_tbPerfilesUsuario_tbPerfiles" ManuallyRouted="false" />
+        <AssociationConnector Association="BdSecurity.tbAplicacionesProyecto" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,22 +12,19 @@ namespace SistemaSeguridad.DA
     using System;
     using System.Collections.Generic;
     
-    public partial class tbAreas
+    public partial class tbDocumentos
     {
-        public tbAreas()
-        {
-            this.tbAreas1 = new HashSet<tbAreas>();
-            this.tbCargos = new HashSet<tbCargos>();
-        }
-    
-        public int CodArea { get; set; }
+        public string CodDocumento { get; set; }
+        public string Ubicación { get; set; }
+        public string CodArea { get; set; }
+        public string CodTipoDoc { get; set; }
+        public string CodProyecto { get; set; }
+        public System.DateTime FechaCreacion { get; set; }
+        public string Version { get; set; }
         public string Nombre { get; set; }
-        public Nullable<int> CodAreaSuperior { get; set; }
-        public string Sigla { get; set; }
-        public string NombreCorto { get; set; }
+        public string Descripcion { get; set; }
     
-        public virtual ICollection<tbAreas> tbAreas1 { get; set; }
-        public virtual tbAreas tbAreas2 { get; set; }
-        public virtual ICollection<tbCargos> tbCargos { get; set; }
+        public virtual tbProyectos tbProyectos { get; set; }
+        public virtual tbTipoDocumentos tbTipoDocumentos { get; set; }
     }
 }

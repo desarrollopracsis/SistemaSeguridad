@@ -12,20 +12,26 @@ namespace SistemaSeguridad.DA
     using System;
     using System.Collections.Generic;
     
-    public partial class tbPerfiles
+    public partial class tbOpciones
     {
-        public tbPerfiles()
+        public tbOpciones()
         {
             this.tbOpcionesPerfil = new HashSet<tbOpcionesPerfil>();
-            this.tbPerfilesUsuario = new HashSet<tbPerfilesUsuario>();
+            this.tbSiteMap = new HashSet<tbSiteMap>();
         }
     
-        public int CodPerfil { get; set; }
+        public int CodOpcion { get; set; }
         public string Nombre { get; set; }
-        public int CodAplicacion { get; set; }
+        public Nullable<int> CodAplicacion { get; set; }
+        public Nullable<int> CodOpcionPadre { get; set; }
+        public string URL { get; set; }
+        public string description { get; set; }
+        public string title { get; set; }
+        public string icono { get; set; }
+        public string jsfunction { get; set; }
     
         public virtual tbAplicaciones tbAplicaciones { get; set; }
         public virtual ICollection<tbOpcionesPerfil> tbOpcionesPerfil { get; set; }
-        public virtual ICollection<tbPerfilesUsuario> tbPerfilesUsuario { get; set; }
+        public virtual ICollection<tbSiteMap> tbSiteMap { get; set; }
     }
 }

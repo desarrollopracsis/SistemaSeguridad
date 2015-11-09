@@ -12,11 +12,12 @@ namespace SistemaSeguridad.DA
     using System;
     using System.Collections.Generic;
     
-    public partial class tbAplicacionesProyecto
+    public partial class tbCargos
     {
-        public string CodProyecto { get; set; }
-        public int CodAplicacion { get; set; }
+        public int CodCargo { get; set; }
+        public string Nombre { get; set; }
+        public Nullable<int> CodArea { get; set; }
     
-        public virtual tbAplicaciones tbAplicaciones { get; set; }
+        public virtual tbAreas tbAreas { get; set; }
     }
 }
