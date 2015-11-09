@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Mantenimiento de Aplicaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Aplicaciones</h2>
+
+@section scripts {
+    <script data-main="/app/main" src="~/app/vendor/require.js"></script>
+}
+
+<div class="well" id="content-evaluacion" data-ng-controller="aplicacionController" data-ng-init="init();">
+    <table class="table table-hover table-striped table-bordered">
+        <thead class="bordered-blueberry">
+            <tr>
+                <th class="col-sm-2">Código</th>
+                <th class="col-sm-2">Nombre</th>
+                <th class="col-sm-2">Fec. Creación</th>
+                <th class="col-sm-2">Fec. Implementación</th>
+                <th class="col-sm-2">Tipo Aplicación</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="t in Aplicaciones">
+                <td class="col-sm-2">
+                    {{t.CodAplicacion}}
+                </td>
+                <td class="col-sm-2">
+                    {{t.Nombre}}
+                </td>
+                <td class="col-sm-2">
+                    {{t.FechaCreacion}}
+                </td>
+                <td class="col-sm-2">
+                    {{t.FechaImplementacion}}
+                </td>
+                <td class="col-sm-2">
+                    {{t.CodTipoAplicacion}}
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+<pre>{{Aplicaciones}}</pre>

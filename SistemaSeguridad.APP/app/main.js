@@ -23,7 +23,9 @@ require([
   'app',
   'domReady',
   'services/perfilService',
-  'controllers/perfilController'
+  'controllers/perfilController',
+  'services/aplicacionService',
+  'controllers/aplicacionController',
 ],
 function (angular, app, domReady) {
     'use strict';

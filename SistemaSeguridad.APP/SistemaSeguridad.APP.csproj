@@ -166,6 +166,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AplicacionesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PerfilesController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -178,9 +179,11 @@
   <ItemGroup>
     <Content Include="app\app.js" />
     <Content Include="app\controllers\controllers.js" />
+    <Content Include="app\controllers\aplicacionController.js" />
     <Content Include="app\controllers\perfilController.js" />
     <Content Include="app\directives\directives.js" />
     <Content Include="app\main.js" />
+    <Content Include="app\services\aplicacionService.js" />
     <Content Include="app\services\perfilService.js" />
     <Content Include="app\services\services.js" />
     <Content Include="app\vendor\angular.js" />
@@ -262,6 +265,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Perfiles\Index.cshtml" />
+    <Content Include="Views\Aplicaciones\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
