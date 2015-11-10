@@ -22,8 +22,7 @@ namespace SistemaSeguridad.DA.Repositorio
 
 
             var consulta = from t1 in obdSecurityEntities.tbAplicaciones                                
-                           let TipoAplicacion = t1.tbTiposAplicacion
-                           
+                           let TipoAplicacion = t1.tbTiposAplicacion                           
                            select new
                            {
                                t1.CodAplicacion,
@@ -39,7 +38,7 @@ namespace SistemaSeguridad.DA.Repositorio
                 Nombre = i.Nombre,
                 FechaCreacion = i.FechaCreacion,
                 FechaImplementacion = i.FechaImplementacion,
-                CodTipoAplicacion = i.CodTipoAplicacion,
+                CodTipoAplicacion =  i.CodTipoAplicacion,
                 NombreTipoAplicacion = i.TipoAplicacion.Nombre
 
             }).ToList();

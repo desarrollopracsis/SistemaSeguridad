@@ -3,11 +3,16 @@
         controllers.controller('aplicacionController', ['$window', '$scope', '$location', 'aplicacionService',
         function ($window, $scope, $location, aplicacionService) {
             $scope.Aplicaciones = [];
+            $scope.TiposAplicaciones = [];           
+            $scope.TipoAplicacion = $scope.TiposAplicaciones[1];
             $scope.init = function () {
                 
                 obtenerAplicaciones();
             };
             
+            $scope.Refrescar = function () {
+                obtenerAplicaciones();
+            };
             function obtenerAplicaciones() {
                 
                 //block('content-respuesta', 'Cargando Respuestas...');
@@ -27,6 +32,7 @@
                     
                         //$('#content-respuesta').unblock();
                         console.log($scope.Aplicaciones, "$scope.Aplicaciones");
+                        console.log($scope.TiposAplicaciones, "$scope.Aplicaciones");
                     },
                     function (errorPl) {
                         //  $('#content-respuesta').unblock();

@@ -8,7 +8,7 @@
 
 <div><h2>Aplicaciones</h2></div>
 
-        <button type="submit" class="btn btn-primary btn-buscar right">Nuevo</button>
+        <button class="btn btn-primary btn-buscar right" type="button" data-toggle="modal" data-target="#ModalAplicacion">Nuevo</button>
 
 
 <div class="well" id="content-evaluacion" data-ng-controller="aplicacionController" data-ng-init="init();">
@@ -64,48 +64,70 @@
                         @*<span ng-show="t.Visible==false">
                                {{t.CodTipoAplicacion}}
                             </span>*@
-
-                        {{t.NombreTipoAplicacion}}
+                        <span  ng-repeat="item in TiposAplicaciones | filter: t.CodTipoAplicacion: true">
+                            {{item.Nombre}}
+                        </span>                       
+                    </td>
+                    <td>
+                        <span class="btnAdd"><button type="button" ng-click="editEmployee(employee)"  class="btn btn-default btn-xs">Modificar</button></span>                        
+                        <span class="btnRed"><button type="button" ng-click="deleteEmployee(employee)" class="btn btn-danger btn-xs">Eliminar</button></span>
                     </td>
                 </tr>
 
             </tbody>
         </table>
     </div>
-</div>
 
+    <div class="modal fade" id="ModalAplicacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Aplicaciones</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">Código:</label>
+                            <input type="text" class="form-control" id="codImplementacion">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">Tipo de Aplicación:</label>
+                            <select class="form-control ng-pristine ng-valid ng-touched" ng-options="t.CodTipoAplicacion as t.Nombre for t in TiposAplicaciones" ng-model="TipoAplicacion"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">Fecha Creación:</label>
+                            <input type="date" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">Fecha Implementación:</label>
+                            <input type="date" class="form-control" id="recipient-name">
+                        </div>
 
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="recipient-name" class="control-label">Recipient:</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="control-label">Message:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Aceptar</button>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
+
+
+
+
 
 
 
 <pre>{{Aplicaciones}}</pre>
+<pre>{{TiposAplicaciones}}</pre>
 
 @section scripts {
     <script data-main="/app/main" src="~/app/vendor/require.js"></script>
