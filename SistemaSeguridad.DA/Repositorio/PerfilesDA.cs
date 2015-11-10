@@ -9,6 +9,9 @@ namespace SistemaSeguridad.DA.Repositorio
    public  class PerfilesDA
     {
        bdSecurityEntities obdSecurityEntities = new bdSecurityEntities();
+
+
+
        public List<PerfilesBE> ObtenerPerfiles()
        {
            

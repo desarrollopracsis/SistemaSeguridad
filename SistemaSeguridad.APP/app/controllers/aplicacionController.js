@@ -15,6 +15,7 @@
                 response.then(
                     function (pl) {
                         $scope.Aplicaciones = pl.data.Aplicaciones;
+                        $scope.TiposAplicaciones = pl.data.TiposAplicaciones;
 
                         //$.each($scope.Perfiles, function (index, item) {
                         //    $scope.Perfiles.push({
