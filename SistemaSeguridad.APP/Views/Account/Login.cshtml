@@ -4,47 +4,77 @@
     ViewBag.Title = "Iniciar sesión";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
 
-<section id="loginForm">
-<h2>Utilice una cuenta local para iniciar sesión.</h2>
-@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>@ViewBag.Title</title>
 
-    <fieldset>
-        <legend>Formulario de inicio de sesión</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
-            </li>
-            <li>
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-            </li>
-        </ol>
-        <input type="submit" value="Iniciar sesión" />
-    </fieldset>
-    <p>
-        @Html.ActionLink("Register", "Register") si no tiene ninguna cuenta.
-    </p>
-}
-</section>
+    <!--Basic Styles-->
+    @Styles.Render("~/Content/bootstrap.min.css")
+    @Styles.Render("~/Content/font-awesome.min.css")
+    <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
 
-<section class="social" id="socialLoginForm">
-    <h2>Usar otro servicio para iniciar sesión.</h2>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
+    <!--Fonts-->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300" rel="stylesheet" type="text/css">
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    <!--Beyond styles-->
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Styles.Render("~/Content/beyond.min.css")
+    @Styles.Render("~/Content/demo.min.css")
+    @Styles.Render("~/Content/animate.min.css")
+    @Styles.Render("~/Content/animate.min.css")
+
+    <link id="skin-link" href="" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+
+    <div class="row">
+        <div class="login-container animated fadeInDown">
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal ", role = "form", @id = "formulario-login" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="login-container animated fadeInDown">
+                        <div class="loginbox bg-white">
+                            <div class="loginbox-title">Login</div>
+                            <div class="loginbox-textbox">
+
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Usuario" })
+                                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="loginbox-textbox">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Contraseña" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="loginbox-forgot">
+                                <a href="">Olvide contraseña</a>
+                            </div>
+                            <div class="loginbox-submit">
+                                <input class="btn btn-primary" value="Aceptar" type="submit">
+                                <input class="btn" value="Cancelar" onclick="$('#formulario-login')[0].reset();" type="button">
+                            </div>
+                        </div>
+                    </div>
+                }
+            </section>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+   @* @RenderSection("scripts", required: false)*@
+</body>
+<!--Basic Scripts-->
+
+
+<!--Beyond Scripts-->
+@*@Scripts.Render("/assets/js/slimscrolljquery/jquery.slimscroll.min.js")*@
+
+</html>
