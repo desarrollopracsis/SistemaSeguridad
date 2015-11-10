@@ -18,14 +18,18 @@ namespace SistemaSeguridad.APP.Controllers
         }
 
         AplicacionesBL oAplicaciponesBL = new AplicacionesBL();
+        TiposAplicacionBL oTiposAplicaciponBL = new TiposAplicacionBL();
         [HttpGet]
         public JsonResult ObtenerAplicaciones()
         {
             var oAplicacipones = oAplicaciponesBL.ObtenerAplicaciones();
+            var oTiposAplicacipon = oTiposAplicaciponBL.ObtenerTipoAplicaciones();
 
             return Json(new
             {
                 Aplicaciones = oAplicacipones
+                ,
+                TiposAplicaciones = oTiposAplicacipon
             }, JsonRequestBehavior.AllowGet);
         }
 
