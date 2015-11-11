@@ -4950,7 +4950,7 @@ a.list-group-item.active > .badge,
   border-radius: 6px;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 900px) {
   .jumbotron {
     padding-top: 48px;
     padding-bottom: 48px;
@@ -5738,11 +5738,11 @@ body.modal-open,
   margin-left: 0;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 900px) {
   .modal-dialog {
     right: auto;
     left: 50%;
-    width: 600px;
+    width: 900px;
     padding-top: 30px;
     padding-bottom: 30px;
   }
@@ -6183,7 +6183,7 @@ body.modal-open,
   text-shadow: none;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 900px) {
   .carousel-control .icon-prev,
   .carousel-control .icon-next {
     width: 30px;
