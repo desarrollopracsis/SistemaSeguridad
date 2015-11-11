@@ -8,15 +8,15 @@
 
 <div><h2>Aplicaciones</h2></div>
 
-        <button class="btn btn-primary btn-buscar right" type="button" data-toggle="modal" data-target="#ModalAplicacion">Nuevo</button>
+<button class="btn btn-primary btn-buscar right" type="button" data-toggle="modal" data-target="#ModalAplicacion" ng-click="LimpiarModal()">Nuevo</button>
 
 
 <div class="well" id="content-evaluacion" data-ng-controller="aplicacionController" data-ng-init="init();">
     <div class="form-inline ">
         <div class="form-group">
             <label for="criterioBusqueda">Contenido de Busqueda:</label>
-            <input type="text" class="form-control" id="criterioBusqueda" placeholder="Aplicación">
-            <button type="submit" class="btn btn-default btn-buscar">Buscar</button>
+            <input type="text" class="form-control" id="criterioBusqueda" placeholder="Aplicación" ng-model="criterioBusqueda">
+            <button class="btn btn-default btn-buscar" ng-click="Buscar()">Buscar</button>
         </div>
     </div>
 
@@ -55,7 +55,7 @@
                         {{t.Nombre}}
                     </td>
                     <td class="col-sm-2">
-                        {{t.FechaCreacion}}
+                        {{t.FechaCreacion}}   
                     </td>
                     <td class="col-sm-2">
                         {{t.FechaImplementacion}}
@@ -64,13 +64,13 @@
                         @*<span ng-show="t.Visible==false">
                                {{t.CodTipoAplicacion}}
                             </span>*@
-                        <span  ng-repeat="item in TiposAplicaciones | filter: t.CodTipoAplicacion: true">
+                        <span ng-repeat="item in TiposAplicaciones | filter: t.CodTipoAplicacion: true">
                             {{item.Nombre}}
-                        </span>                       
+                        </span>
                     </td>
                     <td>
-                        <span class="btnAdd"><button type="button" ng-click="editEmployee(employee)"  class="btn btn-default btn-xs">Modificar</button></span>                        
-                        <span class="btnRed"><button type="button" ng-click="deleteEmployee(employee)" class="btn btn-danger btn-xs">Eliminar</button></span>
+                        <span class="btnAdd"><button ng-click="CargarParaEditar(t.CodAplicacion);" class="btn btn-default btn-xs">Modificar</button></span>
+                        <span class="btnRed"><button ng-click="EliminarAplicacion(t)" class="btn btn-danger btn-xs">Eliminar</button></span>
                     </td>
                 </tr>
 
@@ -89,30 +89,30 @@
                     <form>
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">Código:</label>
-                            <input type="text" class="form-control" id="codImplementacion">
+                            <input type="text" class="form-control" id="CodAplicacion" ng-model="Aplicacion.CodAplicacion" readonly>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Nombre:</label>
-                            <input type="text" class="form-control" id="nombre">
+                            <input type="text" class="form-control" id="Nombre" ng-model="Aplicacion.Nombre">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Tipo de Aplicación:</label>
-                            <select class="form-control ng-pristine ng-valid ng-touched" ng-options="t.CodTipoAplicacion as t.Nombre for t in TiposAplicaciones" ng-model="TipoAplicacion"></select>
+                            <select id="CodTipoAplicacion" class="form-control ng-pristine ng-valid ng-touched" ng-options="t.CodTipoAplicacion as t.Nombre for t in TiposAplicaciones" ng-model="Aplicacion.CodTipoAplicacion"></select>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Fecha Creación:</label>
-                            <input type="date" class="form-control" id="recipient-name">
+                            <input type="text" class="form-control" id="FechaCreacion" ng-model="Aplicacion.FechaCreacion" data-ng-datepicker>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Fecha Implementación:</label>
-                            <input type="date" class="form-control" id="recipient-name">
+                            <input type="text" class="form-control" id="FechaImplementacion" ng-model="Aplicacion.FechaImplementacion" data-ng-datepicker>
                         </div>
 
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Aceptar</button>
+                    <button type="button" class="btn btn-primary" ng-click="InsertarModificarAplicacion()">Aceptar</button>
                 </div>
             </div>
         </div>
@@ -122,13 +122,14 @@
 
 
 
-
-
-
-
 <pre>{{Aplicaciones}}</pre>
 <pre>{{TiposAplicaciones}}</pre>
 
 @section scripts {
     <script data-main="/app/main" src="~/app/vendor/require.js"></script>
+    <style>
+        .datepicker {
+            z-index: 1151 !important;
+        }
+    </style>
 }
