@@ -1,0 +1,37 @@
+﻿.img-ps {
+    margin-top : 2%;
+    margin-bottom : 1%;
+}
+
+.img-minedu {
+    margin-top : 12%;
+    margin-bottom : 1%;
+}
+
+.label-date {
+    margin-top : 26%;
+    margin-bottom : 1%;
+    font-weight : 600;
+}
+
+.block-1 {
+    background-color : #6699FF;
+    height : 20px;
+}
+
+.block-2 {
+    background-color : #949494;
+    height : 10px;
+}
+
+.label-validar-m{
+    font-weight: normal;
+    color: red;
+    font-size: 13px;
+    margin-left: 12px;
+    display: none;
+}
+
+.fa-custom {
+	font-size: 1.40em !important;
+}

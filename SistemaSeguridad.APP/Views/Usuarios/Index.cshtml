@@ -2,4 +2,121 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+
+<div><h2>Usuarios</h2></div>
+
+@*<button class="btn btn-primary btn-buscar right" type="button" data-toggle="modal" data-target="#myModal">Nuevo</button>*@
+
+
+
+
+<div class="well" id="content-evaluacion" data-ng-controller="usuariosController" data-ng-init="init();">
+    <button type="button" class="btn btn-primary" ng-click="NuevoUsuario();"><i class="fa fa-plus"></i> Agregar </button>
+
+    <div class="form-inline ">
+        <div class="form-group">
+            <label for="criterioBusqueda">Contenido de Busqueda:</label>
+            <input type="text" class="form-control" id="criterioBusqueda" placeholder="Usuarios">
+            <button type="submit" class="btn btn-default btn-buscar">Buscar</button>
+        </div>
+    </div>
+    <br />
+    <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered">
+            <thead class="bordered-blueberry">
+                <tr>
+                    <th class="col-sm-2">Código</th>
+                    <th class="col-sm-2">Cédula</th>
+                    <th class="col-sm-2">Nombres</th>
+                    <th class="col-sm-2">Cargo</th>
+                    <th class="col-sm-2">Actualizar</th>
+                    <th class="col-sm-2">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="t in Usuarios">
+                    <td class="col-sm-2">
+                        {{t.CodUsuario}}
+                    </td>
+                    <td class="col-sm-2">
+                        {{t.Cedula}}
+                    </td>
+                    <td class="col-sm-2">
+                        {{t.Nombres}}
+                    </td>
+                    <td class="col-sm-2">
+                        @*<span ng-show="t.Visible==false">
+                               {{t.CodCargo}}
+                            </span>*@
+                        <span ng-repeat="item in Cargos | filter: t.CodCargo: true">
+                            {{item.Nombre}}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="btnAdd"><button type="button" ng-click="editEmployee(employee)" class="btn btn-default btn-xs">Modificar</button></span>
+
+                    </td>
+                    <td>
+                        <span class="btnRed"><button type="button" ng-click="deleteEmployee(employee)" class="btn btn-danger btn-xs">Eliminar</button></span>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="dialog-Usuario" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myLargeModalLabel">Usuario</h4>
+                </div>
+                <div class="modal-body" style="max-height: 500px;overflow-y:scroll;">
+                    @Html.Partial("~/Views/Usuarios/_Usuario.cshtml")
+                </div>
+                <div class="modal-footer" aling="center">
+                    <div align="center">
+                        <button type="button" class="btn btn-primary" tabindex="10" ng-click="guardarCentroAtencion()"><i class="fa fa-save"></i> Guardar</button>
+                        <button type="button" class="btn btn-default" tabindex="11" data-dismiss="modal">Cerrar</button>
+                        </div>
+                        
+                    </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+
+
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">USUARIOS DEL DOMINIO</h4>
+                </div>
+                <div class="modal-body">
+                
+                       
+
+                </div>
+                      
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="return Actualizar()">ACEPTAR</button>&nbsp;
+                    <button type="button" class="btn btn-info" data-dismiss="modal">CANCELAR</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+</div>
+
+@*<pre>{{Usuarios}}</pre>*@
+
+@section scripts {
+    <script data-main="/app/main" src="~/app/vendor/require.js"></script>
+}

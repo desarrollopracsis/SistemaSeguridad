@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Registro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="well" id="content-evaluacion" data-ng-controller="usuariosController">
+    <br />
+    <div><h2>Registro de Usuarios</h2></div>
+    <br />
+
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="row">
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="widget radius-bordered">
+                    <div class="widget-body">
+                        <form id="registrationForm" method="post" class="form-horizontal bv-form" novalidate="novalidate">
+                            <button type="submit" class="bv-hidden-submit" style="display: none; width: 0px; height: 0px;"></button>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Código:</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="CodigoUsuario" id="CodigoUsuario" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Cédula:</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="cedula" id="cedula" autofocus tabindex="1" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Nombre:</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="nombre" id="nombre" tabindex="3" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Dominio:</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="Dominio" id="Dominio" tabindex="5" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Email:</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="Email" id="Email" tabindex="7" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Descripción:</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="Descripcion" id="Descripcion  " tabindex="9" />
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="widget  radius-bordered">
+                    <div class="widget-body">
+                        <form id="togglingForm" method="post" class="form-horizontal bv-form" novalidate="novalidate">
+                            <button type="submit" class="bv-hidden-submit" style="display: none; width: 0px; height: 0px;"></button>
+
+                            <div class="form-group">
+                                <div class="col-lg-6">
+                                    <label class="control-label">Seleccionar Usuario del Dominio:</label>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal">
+                                        IR
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-5">
+                                    <label class="control-label">Estado de Cuenta:</label>
+                                </div>
+
+                                <div class="col-lg-7">
+                                    <select class="form-control ng-pristine ng-valid ng-touched" ng-options="t.CodTipoAplicacion as t.Nombre for t in TiposAplicaciones" ng-model="TipoAplicacion" tabindex="2"></select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-lg-5">
+                                    <label class="control-label">Apellidos:</label>
+                                </div>
+
+                                <div class="col-lg-7">
+                                    <input type="text" class="form-control" name="Apellidos" id="Apellidos" tabindex="4" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-5">
+                                    <label class="control-label">Usuario Dominio:</label>
+                                </div>
+
+
+                                <div class="col-lg-7">
+                                    <input type="text" class="form-control" name="UsuariosDominio" id="UsuariosDominio" tabindex="6" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-lg-5">
+                                    <label class="control-label">Cargo:</label>
+                                </div>
+
+
+                                <div class="col-lg-7">
+                                    <select class="form-control ng-pristine ng-valid ng-touched" ng-options="t.CodigoCargo as t.Nombre for t in Cargos" ng-model="Cargos" tabindex="8"></select>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer" aling="center">
+        <div align="center">
+            <button type="button" class="btn btn-primary" tabindex="10" ng-click="guardarCentroAtencion()"><i class="fa fa-save"></i> Guardar</button>
+            <button type="button" class="btn btn-default" tabindex="11" ng-click="regresar();">Cerrarss</button>
+        </div>
+
+    </div>
+</div>
+
+@section scripts {
+    <script data-main="/app/main" src="~/app/vendor/require.js"></script>
+}
