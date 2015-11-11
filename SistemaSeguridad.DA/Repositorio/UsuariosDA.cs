@@ -39,27 +39,5 @@ namespace SistemaSeguridad.DA.Repositorio
 
        }
 
-       public void InsertarAplicacion(AplicacionesBE oAplicacionBE)
-       {
-           try
-           {
-               tbAplicaciones otbAplicaciones = new tbAplicaciones()
-               {
-                   Nombre = oAplicacionBE.Nombre,
-                   FechaCreacion = oAplicacionBE.FechaCreacion,
-                   FechaImplementacion = oAplicacionBE.FechaImplementacion,
-                   CodTipoAplicacion = oAplicacionBE.CodTipoAplicacion
-               };
-
-               obdSecurityEntities.tbAplicaciones.Add(otbAplicaciones);
-               obdSecurityEntities.SaveChanges();
-           }
-           catch (Exception)
-           {
-
-               throw;
-           }
-
-       }
     }
 }
