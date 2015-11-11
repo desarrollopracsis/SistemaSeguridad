@@ -20,7 +20,7 @@ namespace SistemaSeguridad.DA.Repositorio
            }
 
            var consulta = from t1 in obdSecurityEntities.tbUsuarios
-                          //let TipoAplicacion = t1.CodUsuario
+                          //let TipoAplicacion = t1.CodUsuariossssss
 
                           select new
                           {
