@@ -40,9 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AplicacionesBL.cs" />
+    <Compile Include="CargosBL.cs" />
     <Compile Include="PerfilesBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TiposAplicacionBL.cs" />
+    <Compile Include="UsuariosBL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SistemaSeguridad.BE\SistemaSeguridad.BE.csproj">

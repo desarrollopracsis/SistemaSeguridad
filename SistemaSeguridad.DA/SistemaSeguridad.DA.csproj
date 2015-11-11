@@ -66,8 +66,10 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\AplicacionesDA.cs" />
+    <Compile Include="Repositorio\CargoDA.cs" />
     <Compile Include="Repositorio\PerfilesDA.cs" />
     <Compile Include="Repositorio\TiposAplicacionDA.cs" />
+    <Compile Include="Repositorio\UsuariosDA.cs" />
     <Compile Include="scConsultaMasiva.cs">
       <DependentUpon>BdSecurity.tt</DependentUpon>
     </Compile>
