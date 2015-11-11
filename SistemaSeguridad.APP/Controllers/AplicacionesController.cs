@@ -35,6 +35,7 @@ namespace SistemaSeguridad.APP.Controllers
         }
 
 
+
         [HttpGet]
         public JsonResult ObtenerAplicacionPorCod(int nCodAplicacion)
         {
